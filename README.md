@@ -19,7 +19,7 @@ Application for supporting optimization of production process.
 Grortir can be installed with pip:
 
 ```
-$ pip install Grortir
+$ pip install grortir
 ```
 
 or directly from the source code:
