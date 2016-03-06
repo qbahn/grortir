@@ -6,7 +6,7 @@ SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 # Python settings
 ifndef TRAVIS
 	PYTHON_MAJOR ?= 3
-	PYTHON_MINOR ?= 3
+	PYTHON_MINOR ?= 5
 endif
 
 # Test settings
