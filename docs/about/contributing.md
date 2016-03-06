@@ -57,6 +57,12 @@ $ make pylint
 $ make check  # includes all checks
 ```
 
+### Commiting to master
+
+1. Check that code pass all CI tests on your machine 
+2. Create Pull request and recheck that all CI tests are green.
+3. If owner of repo approve your changes then merge to master.
+
 ## Continuous Integration
 
 The CI server will report overall build status:
