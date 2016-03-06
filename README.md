@@ -44,3 +44,7 @@ $ python
 
 Read the full documentation [here](http://qbahn.github.io/grortir).
 
+## For contributors
+
+[How to contribute](docs/about/contributing.md)
+
