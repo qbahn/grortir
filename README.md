@@ -46,5 +46,5 @@ Read the full documentation [here](http://qbahn.github.io/grortir).
 
 ## For contributors
 Check file:
-(docs/about/contributing.md)
+[docs/about/contributing.md](docs/about/contributing.md)
 
