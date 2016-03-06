@@ -1,0 +1,14 @@
+site_name: grortir
+site_description: Application for supporting optimization of production process.
+site_author: Wojtek Pietrucha
+repo_url: https://github.com/qbahn/grortir
+# google_analytics: ['XX-XXXXXXXX-XX', 'auto']
+
+theme: mkdocs
+
+pages:
+- Home: index.md
+- About:
+  - 'Release Notes': about/changes.md
+  - Contributing: about/contributing.md
+  - License: about/license.md
