@@ -2,7 +2,7 @@
 
 import unittest
 
-from grortir.main.model.core.AbstractProcess import AbstractProcess
+from grortir.main.model.core.abstract_process import AbstractProcess
 
 
 class TestAbstractProcess(unittest.TestCase):
