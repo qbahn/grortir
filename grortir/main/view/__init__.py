@@ -1,1 +1,1 @@
-"""Package with components responible for generating views"""
+"""Package with components responsible for generating views."""

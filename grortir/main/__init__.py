@@ -1,1 +1,1 @@
-"""Package with main code of application"""
+"""Package with main code of application."""

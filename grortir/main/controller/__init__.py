@@ -1,1 +1,1 @@
-"""Package with controllers"""
+"""Package with controllers."""
