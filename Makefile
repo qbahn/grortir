@@ -185,6 +185,11 @@ apidocs: depends-doc apidocs/$(PACKAGE)/index.html
 apidocs/$(PACKAGE)/index.html: $(SOURCES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
+.PHONY: apidocsforGH
+apidocsforGH: depends-doc apidocsforGH/$(PACKAGE)/index.html
+apidocsforGH/$(PACKAGE)/index.html: $(SOURCES)
+	pdoc --html --overwrite $(PACKAGE) --html-dir apidocs
+
 .PHONY: mkdocs
 mkdocs: depends-doc site/index.html
 site/index.html: mkdocs.yml docs/*.md

@@ -11,11 +11,14 @@ cache:
   directories:
   - env
 
+addons:
+  apt_packages:
+    - graphviz
+
 env:
   global:
   - RANDOM_SEED=12345
-  # TODO: change this token: http://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci/
-  - secure: "C47GeEhpKhKZ/VUH6zXX+drGw9HdZt05thVikBUhXY8UbdbujVsjG5z8w7/GMpCmHIVKrijxQ5ZCF3HSSk/VBHMHPIR9AtYg3gOjuBmzNuhinYgC6JH7fZdDlDUKOU2U92h8gl0j/6CYIkLhPF211bpc6mSeOfSEIdz3YMcpvvc="
+  - secure: V4/63HkIWZArSna+OUUx4WFajTinqiotlm7KeTqtL8D6eBxHHuXTbEFfQtpePh9k8coB8MmMhL7T/2K3JmRBsUEabN4J8l8lGnW3eV70/G5GMiBzA5+k7ebGdnoOxN+VnGyYFDgktOirRvHnOBZHebQGagx7o/aFnOodgrGdzUaWJhaSzy6eDdyZai04cFQ8JFO6djQSqYPZj8IL5KspWxoW/J0/oWd1tC625Z1ON4Emq/Zma0fcsKpv8XOqbECGFYNQD5WOxcZU9CRpGnQ/q1gcHkZ/axFSFPBnshRCEbcbtYra1/eOKrVPDkHXchk8Y5IlLQjwYWjTBOpVwN3IhfpsX2rmiXQvZWeyta/X/rs11O6sOeJ1tyaW2fxY24Ida+403PR7DBu3PHj809DC9I1D0IFOlWmZoJTAOXrxagMgsgQxNlIXJd/gBiQw647WVdiMePO17fymKdQA2dkox8Coxi0seBsFuJY9S9A/sW5y/wFlzXz3TK5JjOuTE09TTnx2kdbNbT/XUsRpDf+0s9890xATYezWJRgd224YezH59GDyoErneuGJP9SAbWaiBGGSDhT5UzuysYo7iBMmfLEh6bTLSaDxvGxas2IQ2Y8sEo58p7OGp0Fe8kXsVbKJGvs2h2T/pcP6Cp22mEQHTeDxHQQ74VR3mFHPFRtDGWg=
 
 install:
 - pip install coveralls scrutinizer-ocular
@@ -23,6 +26,7 @@ install:
 before_script:
 - make env
 - make depends-ci
+- make depends-doc
 
 script:
 - make ci
@@ -35,7 +39,9 @@ after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST;
   if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
     # Generate site
+    make uml ;
     make mkdocs ;
+    make apidocsforGH ;
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;
     git config --global user.name "travis-ci" ;
@@ -43,6 +49,7 @@ after_script: >
     rm -rf .git ;
     # Rebuild the repository from the generated files and push to GitHub pages
     cd site ;
+    mv ../apidocs . ;
     git init ;
     git add . ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub pages" ;
