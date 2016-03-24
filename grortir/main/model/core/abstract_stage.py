@@ -8,4 +8,4 @@ class AbstractStage:
         """Constructor."""
         self.input_vector = input_vector
         self.control_params = []
-        self.output = self.input_vector[:]
+        self.output_vector = list(self.input_vector)

@@ -1,6 +1,7 @@
 """Module for testing."""
 
 from unittest import TestCase
+from unittest.mock import Mock
 
 from grortir.main.model.core.abstract_stage import AbstractStage
 
@@ -15,4 +16,14 @@ class TestAbstractStage(TestCase):
 
     def test___init__arguments_passed(self):
         """Check arguments in constructor."""
-        pass
+        abstract_stage_mock = Mock()
+        input_vector = (1, 2, 3)
+        AbstractStage.__init__(abstract_stage_mock, input_vector)
+        self.assertEqual(abstract_stage_mock.input_vector, input_vector)
+
+    def test___init__output_mutability(self):
+        """Check fields in object."""
+        input_vector = (1, 2, 3)
+        tested_object = AbstractStage(input_vector)
+        tested_object.output_vector[2] += 1
+        self.assertEqual(tested_object.output_vector[2], 4)

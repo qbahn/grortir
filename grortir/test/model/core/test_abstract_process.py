@@ -1,11 +1,11 @@
 """Module for testing."""
 
-import unittest
+from unittest import TestCase
 
 from grortir.main.model.core.abstract_process import AbstractProcess
 
 
-class TestAbstractProcess(unittest.TestCase):
+class TestAbstractProcess(TestCase):
     """Class for testing."""
     def test___init__(self):
         """Method which check constructor."""
