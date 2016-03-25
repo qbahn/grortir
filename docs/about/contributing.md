@@ -23,7 +23,7 @@ $ make env
 
 ### Care about code quality
 
-Follow Python, OOP conventions.
+Follow Python, OOP and other good conventions.
 
 Useful links:
 
@@ -71,6 +71,11 @@ $ make check  # includes all checks
 1. Check that code pass all CI tests on your machine 
 2. Create Pull request and recheck that all CI tests are green.
 3. If owner of repo approve your changes then merge to master.
+
+#### Pull Requests
+
+1. Each commit in PR should represent one independent working functionality.
+2. After merging your PR to master remove your branch.
 
 ## Continuous Integration
 
