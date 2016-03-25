@@ -61,7 +61,7 @@ def run(command, title, count, retry):
             return False
 
     print("")
-    print("$ %s" % ' '.join(command))
+    print("$ {0!s}".format(' '.join(command)))
     failure = subprocess.call(command)
 
     if failure:
