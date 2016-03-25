@@ -21,6 +21,14 @@ $ make env
 
 ## Development Tasks
 
+### Care about code quality
+
+Follow Python, OOP conventions.
+
+Useful links:
+* [PEP0008](https://www.python.org/dev/peps/pep-0008/)
+* [PEP0257](https://www.python.org/dev/peps/pep-0257/)
+
 ### Testing
 
 Manually run the tests:
