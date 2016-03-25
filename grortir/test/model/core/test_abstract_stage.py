@@ -27,3 +27,15 @@ class TestAbstractStage(TestCase):
         tested_object = AbstractStage(input_vector)
         tested_object.output_vector[2] += 1
         self.assertEqual(tested_object.output_vector[2], 4)
+
+    def test_get_cost(self):
+        """Check get_cost method."""
+        tested_object = AbstractStage()
+        with self.assertRaises(NotImplementedError):
+            tested_object.get_cost()
+
+    def test_get_quality(self):
+        """Check get_quality method."""
+        tested_object = AbstractStage()
+        with self.assertRaises(NotImplementedError):
+            tested_object.get_quality()
