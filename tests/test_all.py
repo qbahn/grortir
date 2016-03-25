@@ -10,10 +10,12 @@ class TestGrortir(unittest.TestCase):
 
     """Sample integration test class."""
 
-    def test_network_stuff(self):
+    @staticmethod
+    def test_network_stuff():
         """Example Test method."""
         assert sample.function_with_network_stuff() is True
 
-    def test_disk_stuff(self):
+    @staticmethod
+    def test_disk_stuff():
         """Another example Test method."""
         assert sample.function_with_disk_stuff() is False
