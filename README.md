@@ -9,42 +9,17 @@ Application for supporting optimization of production process.
 [![PyPI Downloads](http://img.shields.io/pypi/dm/Grortir.svg)](https://pypi.python.org/pypi/Grortir)
 
 ## Getting Started
+Check file:
 
-### Requirements
-
-* Python 3.3+
-
-### Installation
-
-Grortir can be installed with pip:
-
-```
-$ pip install grortir
-```
-
-or directly from the source code:
-
-```
-$ git clone https://github.com/qbahn/grortir.git
-$ cd grortir
-$ python setup.py install
-```
-
-## Basic Usage
-
-After installation, the package can imported:
-
-```
-$ python
->>> import grortir
->>> grortir.__version__
-```
+[docs/about/gettingStarted.md](docs/gettingStarted.md)
 
 ## Documentation
-
-Read the full documentation [here](http://qbahn.github.io/grortir).
+Read the full documentation:
+ 
+### [http://qbahn.github.io/grortir](http://qbahn.github.io/grortir)
 
 ## For contributors
 Check file:
+
 [docs/about/contributing.md](docs/about/contributing.md)
 
