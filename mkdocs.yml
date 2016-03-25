@@ -8,6 +8,7 @@ theme: readthedocs
 
 pages:
 - Home: index.md
+- Getting Started: gettingStarted.md
 - Code:
   - Classes: code/classes.md
   - Packages: code/packages.md
