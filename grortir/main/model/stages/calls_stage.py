@@ -6,6 +6,8 @@ class CallsStage(AbstractStage):
     """Implementation of basic stage.
 
     Cost is calculated by number of calls of cost function.
+    Attributes:
+        cost (float): Actual cost  of stage.
     """
 
     def __init__(self, input_vector=()):
@@ -18,7 +20,9 @@ class CallsStage(AbstractStage):
         """
         Return quality of actual output.
 
-        :return: quality
+        Returns:
+            quality (float): quality
+
         """
         self.cost += 1
         return self.calculate_quality()
@@ -27,7 +31,12 @@ class CallsStage(AbstractStage):
         """
         Function for calculating quality.
 
-        :return:
+        Returns:
+            quality (float): quality
+
+        Raises:
+            AssertionError: If length of `control_params`
+                is not equal length of `current_vector`
         """
         assert len(self.control_params) == len(self.current_vector)
         quality = 0
@@ -40,6 +49,7 @@ class CallsStage(AbstractStage):
         """
         Return actual cost of stage.
 
-        :return: cost
+        Returns:
+            cost (float): cost
         """
         return self.cost
