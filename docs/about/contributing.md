@@ -25,10 +25,15 @@ $ make env
 
 Follow Python, OOP and other good conventions.
 
-Useful links:
+Follow those conventions:
 
 * [PEP0008](https://www.python.org/dev/peps/pep-0008/)
 * [PEP0257](https://www.python.org/dev/peps/pep-0257/)
+* [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+
+#### Docstrings
+Create meaningful dosctrings using [Google Docstring Format.](http://sphinxcontrib-napoleon.readthedocs.org/en/latest/example_google.html)
+Add types in docstrings.
 
 ### Testing
 

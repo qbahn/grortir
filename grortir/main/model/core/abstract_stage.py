@@ -2,10 +2,21 @@
 
 
 class AbstractStage:
-    """Class represent single stage in process."""
+    """Class represent single stage in process.
+
+    Attributes:
+        input_vector (tuple): initial vector
+        control_params (list): actual control params
+        current_vector (list): vector of actual input vector
+
+    """
 
     def __init__(self, input_vector=()):
-        """Constructor."""
+        """Constructor.
+
+        Args:
+            input_vector (tuple): initial vector
+        """
         self.input_vector = input_vector
         self.control_params = []
         self.current_vector = list(self.input_vector)

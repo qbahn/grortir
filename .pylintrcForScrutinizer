@@ -1,6 +1,3 @@
-[MASTER]
-load-plugins=pylint.extensions.check_docs
-
 [MESSAGES CONTROL]
 
 disable=locally-disabled,fixme,too-few-public-methods,too-many-public-methods,global-statement,too-many-ancestors
@@ -16,5 +13,3 @@ ignore-long-lines=^.*((https?:)|(pragma:)|(TODO:)).*$
 reports=no
 
 msg-template={msg_id} ({symbol}):{line:3d},{column}: {msg}
-
-# Check also .pylintrcForScrutinizer settings

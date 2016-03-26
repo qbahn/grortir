@@ -7,9 +7,5 @@ class AbstractProcess(nx.DiGraph):
     """Class which represent process which can be optimized."""
 
     def __init__(self):
-        """
-        Constructor.
-
-        :param self: AbstractProcess
-        """
+        """Constructor."""
         nx.DiGraph.__init__(self)
