@@ -193,7 +193,9 @@ apidocsforGH/$(PACKAGE)/index.html: $(SOURCES)
 .PHONY: mkdocs
 mkdocs: depends-doc site/index.html
 site/index.html: mkdocs.yml docs/*.md
+	cp CHANGES.md docs/about/CHANGES.md
 	$(MKDOCS) build --clean --strict
+	rm docs/about/CHANGES.md
 
 # Static Analysis ##############################################################
 

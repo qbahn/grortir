@@ -14,6 +14,6 @@ pages:
   - Packages: code/packages.md
   - ApiDocs: code/apidocs.md
 - About:
-  - 'Release Notes': about/changes.md
+  - 'Release Notes': about/CHANGES.md  # Copied automaticly from root dir.
   - Contributing: about/contributing.md
   - License: about/license.md

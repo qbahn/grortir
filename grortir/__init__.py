@@ -3,7 +3,7 @@
 import sys
 
 __project__ = 'Grortir'
-__version__ = '0.1.1'
+__version__ = '0.1.6'
 
 VERSION = "{0} v{1}".format(__project__, __version__)
 
