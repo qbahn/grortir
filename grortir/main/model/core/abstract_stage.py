@@ -10,10 +10,12 @@ class AbstractStage:
         self.control_params = []
         self.output_vector = list(self.input_vector)
 
-    def get_cost(self):
+    @staticmethod
+    def get_cost():
         """Return cost of stage."""
         raise NotImplementedError
 
-    def get_quality(self):
+    @staticmethod
+    def get_quality():
         """Return quality of stage."""
         raise NotImplementedError
