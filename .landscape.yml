@@ -1,0 +1,10 @@
+# Configuration file for landscape checker application
+doc-warnings: yes
+test-warnings: yes
+strictness: veryhigh
+max-line-length: 80
+autodetect: yes
+ignore-paths:
+    - scent.py
+python-targets:
+    - 3
