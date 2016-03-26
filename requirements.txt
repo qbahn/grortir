@@ -1,2 +1,3 @@
 networkx
+wheel
 testpackage == 2.26

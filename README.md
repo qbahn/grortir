@@ -11,9 +11,9 @@ Application for supporting optimization of production process.
 [![PyPI Downloads](http://img.shields.io/pypi/dm/Grortir.svg)](https://pypi.python.org/pypi/Grortir)
 
 ## Getting Started
-Check file:
+Check documentation site:
 
-[docs/about/gettingStarted.md](docs/gettingStarted.md)
+[http://qbahn.github.io/grortir/gettingStarted/](http://qbahn.github.io/grortir/gettingStarted/)
 
 ## Documentation
 Read the full documentation:
@@ -21,7 +21,7 @@ Read the full documentation:
 ### [http://qbahn.github.io/grortir](http://qbahn.github.io/grortir)
 
 ## For contributors
-Check file:
+Check documentation site:
 
-[docs/about/contributing.md](docs/about/contributing.md)
+[http://qbahn.github.io/grortir/about/contributing/](http://qbahn.github.io/grortir/about/contributing/)
 

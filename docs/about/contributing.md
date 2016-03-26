@@ -89,7 +89,13 @@ $ make ci
 
 Release to PyPI:
 
+1. Update version in file `grortir/__init__.py` to `your.version`
+2. Check and update `CHANGES.md` file.
+3. Commit changes in branch `release/your.version`
+4. Upload package:
 ```
-$ make upload-test  # dry run upload to a test server
+$ make upload-test  # dry run upload to a test server, if success upload to real pypi
 $ make upload
 ```
+5. Check success of upload on [Grortir PyPI](https://pypi.python.org/pypi?%3Aaction=pkg_edit&name=Grortir) site and fix if needed.
+
