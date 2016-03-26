@@ -4,7 +4,13 @@ test-warnings: yes
 strictness: veryhigh
 max-line-length: 80
 autodetect: yes
+
+pep257:
+  disable:
+    - D203
+
 ignore-paths:
     - scent.py
+
 python-targets:
     - 3
