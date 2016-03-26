@@ -25,8 +25,8 @@ class TestAbstractStage(TestCase):
         """Check fields in object."""
         input_vector = (1, 2, 3)
         tested_object = AbstractStage(input_vector)
-        tested_object.output_vector[2] += 1
-        self.assertEqual(tested_object.output_vector[2], 4)
+        tested_object.current_vector[2] += 1
+        self.assertEqual(tested_object.current_vector[2], 4)
 
     def test_get_cost(self):
         """Check get_cost method."""

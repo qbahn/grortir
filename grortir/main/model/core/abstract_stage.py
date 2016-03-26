@@ -8,7 +8,7 @@ class AbstractStage:
         """Constructor."""
         self.input_vector = input_vector
         self.control_params = []
-        self.output_vector = list(self.input_vector)
+        self.current_vector = list(self.input_vector)
 
     @staticmethod
     def get_cost():
