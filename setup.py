@@ -18,7 +18,8 @@ setuptools.setup(
     name=__project__,
     version=__version__,
 
-    description="Application for supporting optimization of production process.",
+    description="""Application for supporting
+                 optimization of production process.""",
     url='https://github.com/qbahn/grortir',
     author='Wojtek Pietrucha',
     author_email='wojtekpietrucha@gmail.com',
