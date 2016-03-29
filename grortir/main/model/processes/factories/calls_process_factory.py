@@ -21,12 +21,14 @@ class CallsProcessFactory:
         self.process = CallsProcess()
 
     def _update_structure(self):
+        """Update structure of process."""
         if self.structure_type == "linear":
             self.process.add_path(self._stages_to_add)
         else:
             raise NotImplementedError()
 
     def _create_stages(self):
+        """Create stages which will be injected to process."""
         for i in range(self.how_many_nodes):
             self._stages_to_add += [CallsStage(str(i))]
 
