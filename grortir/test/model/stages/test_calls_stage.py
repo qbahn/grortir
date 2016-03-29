@@ -29,7 +29,7 @@ class TestCallsStage(TestCase):
     def test_calculate_quality_ex(self):
         """Test case when control are wrong."""
         input_vector = (2, 3, 4, 5, 6)
-        tested_object = CallsStage(input_vector)
+        tested_object = CallsStage('name', input_vector)
         tested_object.control_params = [2, 2]
         with self.assertRaises(AssertionError):
             tested_object.calculate_quality()
@@ -37,7 +37,7 @@ class TestCallsStage(TestCase):
     def test_calculate_quality_ok(self):
         """Test case when control params and input are ok."""
         input_vector = (2, 3, 4, 5, 6, 1)
-        tested_object = CallsStage(input_vector)
+        tested_object = CallsStage('name', input_vector)
         tested_object.control_params = [1, 1, 1, 1, 1, 1.5]
         result = tested_object.calculate_quality()
         self.assertEqual(result, 55.25)
