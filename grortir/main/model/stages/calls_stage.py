@@ -7,12 +7,14 @@ class CallsStage(AbstractStage):
 
     Cost is calculated by number of calls of cost function.
     Attributes:
-        cost (float): Actual cost  of stage.
+        cost (float): Actual cost of stage.
+        name (str): Name of stage
     """
 
-    def __init__(self, input_vector=()):
+    def __init__(self, name, input_vector=()):
         """Constructor."""
         super().__init__(input_vector)
+        self.name = name
         self.control_params = [0] * len(self.input_vector)
         self.cost = 0
 
