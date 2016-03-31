@@ -35,7 +35,7 @@ class TestCallsStage(TestCase):
             tested_object.calculate_quality()
 
     def test_calculate_quality_ok(self):
-        """Test case when control params and input are ok."""
+        """Test case when control params and input are okay."""
         input_vector = (2, 3, 4, 5, 6, 1)
         tested_object = CallsStage('name', input_vector)
         tested_object.control_params = [1, 1, 1, 1, 1, 1.5]
