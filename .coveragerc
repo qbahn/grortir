@@ -3,3 +3,4 @@ branch = true
 omit =
     */env/*
     */test/*
+    */grortir/externals/*
