@@ -11,6 +11,7 @@ pep257:
 
 ignore-paths:
     - scent.py
+    - grortir/externals
 
 python-targets:
     - 3

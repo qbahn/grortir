@@ -1,4 +1,5 @@
 networkx
+numpy
 wheel
 pyenchant
 testpackage == 2.26
