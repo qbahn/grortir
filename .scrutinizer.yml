@@ -10,3 +10,6 @@ tools:
     pylint:
         python_version: 3
         config_file: '.pylintrcForScrutinizer'
+filter:
+    excluded_paths:
+        - "grortir/externals/"
