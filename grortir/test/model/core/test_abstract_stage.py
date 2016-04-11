@@ -39,3 +39,9 @@ class TestAbstractStage(TestCase):
         tested_object = AbstractStage()
         with self.assertRaises(NotImplementedError):
             tested_object.get_quality()
+
+    def test_could_be_optimized(self):
+        """Check could_be_optimized method."""
+        tested_object = AbstractStage()
+        with self.assertRaises(NotImplementedError):
+            tested_object.could_be_optimized()

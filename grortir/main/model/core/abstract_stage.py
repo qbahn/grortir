@@ -30,3 +30,8 @@ class AbstractStage:
     def get_quality():
         """Return quality of stage."""
         raise NotImplementedError
+
+    @staticmethod
+    def could_be_optimized():
+        """Return answer if it is still possible to optimize that stage."""
+        raise NotImplementedError
