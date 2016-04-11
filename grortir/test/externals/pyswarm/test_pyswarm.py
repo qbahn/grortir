@@ -4,7 +4,7 @@ from grortir.externals.pyswarm.pso import pso
 
 
 class TestPso(TestCase):
-    """Class for tests PSO."""
+    """Class for tests pyswarm."""
 
     def test_run_simple_pso(self):
         """Test running library."""
@@ -20,7 +20,7 @@ def myfunc(input_vector):
     """Simple function for tests.
 
     Args:
-        input_vector: input vector
+        input_vector (list): input vector
 
     Returns:
         object : value of function
