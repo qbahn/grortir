@@ -20,7 +20,7 @@ class CallsStage(AbstractStage):
         self.control_params = [0] * len(self.input_vector)
         self.cost = 0
 
-    def get_quality(self):
+    def get_quality(self, control_params=None):
         """
         Return quality of actual output.
 
@@ -28,10 +28,12 @@ class CallsStage(AbstractStage):
             quality (float): quality
 
         """
+        if control_params is None:
+            control_params = self.control_params[:]
         self.cost += 1
-        return self.calculate_quality()
+        return self.calculate_quality(control_params)
 
-    def calculate_quality(self):
+    def calculate_quality(self, control_params):
         """
         Function for calculating quality.
 
@@ -42,10 +44,10 @@ class CallsStage(AbstractStage):
             AssertionError: If length of `control_params`
                 is not equal length of `current_vector`
         """
-        assert len(self.control_params) == len(self.current_vector)
+        assert len(control_params) == len(self.current_vector)
         quality = 0
-        for i in enumerate(self.control_params):
-            quality += (self.control_params[i[0]] - self.current_vector[
+        for i in enumerate(control_params):
+            quality += (control_params[i[0]] - self.current_vector[
                 i[0]]) ** 2
         return quality
 
