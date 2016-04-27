@@ -3,3 +3,4 @@ numpy
 wheel
 pyenchant
 testpackage == 2.26
+nose
