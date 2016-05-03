@@ -6,6 +6,7 @@ from unittest.mock import Mock, sentinel
 from grortir.main.model.stages.calls_stage import CallsStage
 
 MAX_CALLS = 100
+CONTRL_PARAMS = [1, 1, 1, 1, 1, 1.5]
 
 
 class TestCallsStage(TestCase):
@@ -16,10 +17,21 @@ class TestCallsStage(TestCase):
         tested_object = Mock()
         tested_object.cost = 7
         tested_object.calculate_quality.return_value = sentinel.quality
-        result = CallsStage.get_quality(tested_object)
+        tested_object.control_params = CONTRL_PARAMS
+        result = CallsStage.get_quality(tested_object, CONTRL_PARAMS)
         self.assertEqual(tested_object.cost, 8)
-        tested_object.calculate_quality.assert_called_with()
+        tested_object.calculate_quality.assert_called_with(CONTRL_PARAMS)
         self.assertEqual(result, sentinel.quality)
+
+    def test_get_quality_without_vector(self):
+        """Test for get_quality method when no arguments passed."""
+        tested_object = Mock()
+        tested_object.cost = 9
+        tested_object.calculate_quality.return_value = sentinel.quality
+        tested_object.control_params = CONTRL_PARAMS
+        CallsStage.get_quality(tested_object)
+        self.assertEqual(tested_object.cost, 10)
+        tested_object.calculate_quality.assert_called_with(CONTRL_PARAMS)
 
     def test_get_cost(self):
         """Test for get_cost method."""
@@ -34,14 +46,14 @@ class TestCallsStage(TestCase):
         tested_object = CallsStage('name', MAX_CALLS, input_vector)
         tested_object.control_params = [2, 2]
         with self.assertRaises(AssertionError):
-            tested_object.calculate_quality()
+            tested_object.calculate_quality(tested_object.control_params)
 
     def test_calculate_quality_ok(self):
         """Test case when control params and input are okay."""
         input_vector = (2, 3, 4, 5, 6, 1)
         tested_object = CallsStage('name', MAX_CALLS, input_vector)
-        tested_object.control_params = [1, 1, 1, 1, 1, 1.5]
-        result = tested_object.calculate_quality()
+        tested_object.control_params = CONTRL_PARAMS
+        result = tested_object.calculate_quality(tested_object.control_params)
         self.assertEqual(result, 55.25)
 
     def test_could_be_optimized_pos(self):
