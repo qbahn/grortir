@@ -12,8 +12,7 @@ class TestPso(TestCase):
         """Test running library."""
 
         stage_to_test = ExampleStage(EXAMPLE_INPUT)
-        x_opt, f_opt, iterations = pso(myfunc, LOWER_BOUND, UPPER_BOUND,
-                                       stage=stage_to_test)
+        x_opt, f_opt, iterations = pso(stage=stage_to_test)
         self.assertIsNotNone(x_opt)
         self.assertIsNotNone(f_opt)
         self.assertIsNotNone(iterations)
@@ -21,9 +20,7 @@ class TestPso(TestCase):
     def test_not_able_to_optimize_stage(self):
         """Test when stage is not able to optimize."""
         stage_not_able_to_optimize = StageNotAbleToOptimize(EXAMPLE_INPUT)
-        x_opt, f_opt, iterations = pso(
-            myfunc, LOWER_BOUND, UPPER_BOUND,
-            stage=stage_not_able_to_optimize)
+        x_opt, f_opt, iterations = pso(stage=stage_not_able_to_optimize)
         self.assertIsNotNone(x_opt)
         self.assertIsNotNone(f_opt)
         self.assertIsNotNone(iterations)
@@ -58,8 +55,17 @@ class ExampleStage(AbstractStage):
 
     @staticmethod
     def could_be_optimized():
-        """Return true."""
+        """Return True."""
         return True
+
+    def is_enough_quality(self, value):
+        """Return False."""
+        return False
+
+    @staticmethod
+    def get_output_of_stage():
+        """Return None."""
+        return None
 
 
 class StageNotAbleToOptimize(ExampleStage):
@@ -69,6 +75,11 @@ class StageNotAbleToOptimize(ExampleStage):
     def could_be_optimized():
         """Returns false."""
         return False
+
+    @staticmethod
+    def get_output_of_stage():
+        """Return None."""
+        return None
 
 
 def myfunc(input_vector):

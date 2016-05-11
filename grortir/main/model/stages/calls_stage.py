@@ -10,14 +10,17 @@ class CallsStage(AbstractStage):
         cost (float): Actual cost of stage.
         max_calls (int): Maximum possible calls of cost quality function
         name (str): Name of stage
+        maximum_acceptable_quality (float): max expected quality
     """
 
-    def __init__(self, name, max_calls, input_vector=()):
+    def __init__(self, name, max_calls, input_vector=(),
+                 maximum_acceptable_quality=1e-8):
         """Constructor."""
         super().__init__(input_vector)
         self.max_calls = max_calls
         self.name = name
         self.control_params = [0] * len(self.input_vector)
+        self.maximum_acceptable_quality = maximum_acceptable_quality
         self.cost = 0
 
     def get_quality(self, control_params=None):
@@ -63,3 +66,11 @@ class CallsStage(AbstractStage):
     def could_be_optimized(self):
         """Return answer if it is still possible to optimize that stage."""
         return self.get_cost() < self.max_calls
+
+    def is_enough_quality(self, value):
+        """Return True if value is proper quality."""
+        return value <= self.maximum_acceptable_quality
+
+    def get_output_of_stage(self):
+        """Return output of stage."""
+        return None

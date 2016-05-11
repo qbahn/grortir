@@ -71,3 +71,16 @@ class TestCallsStage(TestCase):
         tested_object.max_calls = MAX_CALLS
         result = CallsStage.could_be_optimized(tested_object)
         self.assertFalse(result)
+
+    def test_is_enough_quality(self):
+        """Test is_enough_quality method."""
+        tested_object = Mock()
+        tested_object.maximum_acceptable_quality = 7
+        result = CallsStage.is_enough_quality(tested_object, 8)
+        self.assertFalse(result)
+
+    def test_get_output_of_stage(self):
+        """Test returning output."""
+        tested_object = CallsStage('name', MAX_CALLS)
+        result = tested_object.get_output_of_stage()
+        self.assertIsNone(result)

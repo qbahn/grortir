@@ -45,3 +45,15 @@ class TestAbstractStage(TestCase):
         tested_object = AbstractStage()
         with self.assertRaises(NotImplementedError):
             tested_object.could_be_optimized()
+
+    def test_is_enough_quality(self):
+        """Check is_enough_quality method."""
+        tested_object = AbstractStage()
+        with self.assertRaises(NotImplementedError):
+            tested_object.is_enough_quality(7)
+
+    def test_get_output_of_stage(self):
+        """Check is_enough_quality method."""
+        tested_object = AbstractStage()
+        with self.assertRaises(NotImplementedError):
+            tested_object.get_output_of_stage()

@@ -1,7 +1,9 @@
 # pylint: skip-file
 from functools import partial
+
 import numpy as np
 from grortir.main.model.core.abstract_stage import AbstractStage
+from grortir.main.model.core.optimization_status import OptimizationStatus
 
 
 def _obj_wrapper(func, args, kwargs, x):
@@ -26,27 +28,25 @@ def _cons_f_ieqcons_wrapper(f_ieqcons, args, kwargs, x):
 
 def _results(stage, *args):
     stage.control_params = args[0].tolist()
+    if stage.is_enough_quality(args[1]):
+        stage.optimization_status = OptimizationStatus.success
+    else:
+        stage.optimization_status = OptimizationStatus.failed
     return args
 
 
-def pso(func_to_opt, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
+def pso(stage=AbstractStage(), ieqcons=[], f_ieqcons=None, args=(), kwargs={},
         swarmsize=100, omega=0.5, phip=0.5, phig=0.5, maxiter=100, minstep=1e-8,
-        minfunc=1e-8, debug=False, processes=1, particle_output=False,
-        stage=AbstractStage()):
+        minfunc=1e-8, debug=False, processes=1, particle_output=False):
     """
     Perform a particle swarm optimization (PSO)
 
     Parameters
     ==========
-    func_to_opt : function
-        The function to be minimized
-    lb : array
-        The lower bounds of the design variable(s)
-    ub : array
-        The upper bounds of the design variable(s)
-
     Optional
     ========
+    stage : AbstractStage
+        Stage which should be optimized.
     ieqcons : list
         A list of functions of length n such that ieqcons[j](x,*args) >= 0.0 in
         a successfully optimized problem (Default: [])
@@ -87,9 +87,6 @@ def pso(func_to_opt, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
     particle_output : boolean
         Whether to include the best per-particle position and the objective
         values at those.
-    stage : AbstractStage
-        Stage which should be optimized.
-
     Returns
     =======
     g : array
@@ -105,6 +102,7 @@ def pso(func_to_opt, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
 
     """
     func_to_opt = stage.get_quality
+    stage.optimization_status = OptimizationStatus.in_progress
     lb = stage.lower_bounds
     ub = stage.upper_bounds
     assert len(lb) == len(ub), 'Lower- and upper-bounds must be the same length'
@@ -224,18 +222,26 @@ def pso(func_to_opt, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
             p_min = best_positions[i_min, :].copy()
             stepsize = np.sqrt(np.sum((best_position - p_min) ** 2))
 
+            if stage.is_enough_quality(best_values[i_min]):
+                print('Stopping search: Enough quality reached.')
+                return formated_values(particle_output, stage, best_position,
+                                       initial_best_position, it,
+                                       best_positions, best_values)
+
             if np.abs(initial_best_position - best_values[i_min]) <= minfunc:
                 print(
                     'Stopping search: Swarm best objective change less than {:}' \
                         .format(minfunc))
                 return formated_values(particle_output, stage, best_position,
-                                       initial_best_position, it, best_positions, best_values)
+                                       initial_best_position, it,
+                                       best_positions, best_values)
             elif stepsize <= minstep:
                 print(
                     'Stopping search: Swarm best position change less than {:}' \
                         .format(minstep))
                 return formated_values(particle_output, stage, best_position,
-                                       initial_best_position, it, best_positions,
+                                       initial_best_position, it,
+                                       best_positions,
                                        best_values)
             else:
                 best_position = p_min.copy()
@@ -246,7 +252,8 @@ def pso(func_to_opt, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
                                                              initial_best_position))
         it += 1
     if maxiter == it:
-        print('Stopping search: maximum iterations reached --> {:}'.format(maxiter))
+        print('Stopping search: maximum iterations reached --> {:}'.format(
+            maxiter))
     else:
         print("Stopping search: stage couldn't be optimized")
 
@@ -254,10 +261,12 @@ def pso(func_to_opt, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
         print(
             "However, the optimization couldn't find a feasible design. Sorry")
     return formated_values(particle_output, stage, best_position,
-                           initial_best_position, it, best_positions, best_values)
+                           initial_best_position, it, best_positions,
+                           best_values)
 
 
-def formated_values(particle_output, stage, best_position, initial_best_position,
+def formated_values(particle_output, stage, best_position,
+                    initial_best_position,
                     it, best_positions, best_values):
     if particle_output:
         return _results(stage, best_position, initial_best_position, it,
