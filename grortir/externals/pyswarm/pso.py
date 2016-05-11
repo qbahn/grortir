@@ -2,6 +2,7 @@
 from functools import partial
 
 import numpy as np
+
 from grortir.main.model.core.abstract_stage import AbstractStage
 from grortir.main.model.core.optimization_status import OptimizationStatus
 
@@ -222,12 +223,6 @@ def pso(stage=AbstractStage(), ieqcons=[], f_ieqcons=None, args=(), kwargs={},
             p_min = best_positions[i_min, :].copy()
             stepsize = np.sqrt(np.sum((best_position - p_min) ** 2))
 
-            if stage.is_enough_quality(best_values[i_min]):
-                print('Stopping search: Enough quality reached.')
-                return formated_values(particle_output, stage, best_position,
-                                       initial_best_position, it,
-                                       best_positions, best_values)
-
             if np.abs(initial_best_position - best_values[i_min]) <= minfunc:
                 print(
                     'Stopping search: Swarm best objective change less than {:}' \
@@ -246,6 +241,12 @@ def pso(stage=AbstractStage(), ieqcons=[], f_ieqcons=None, args=(), kwargs={},
             else:
                 best_position = p_min.copy()
                 initial_best_position = best_values[i_min]
+
+            if stage.is_enough_quality(best_values[i_min]):
+                print('Stopping search: Enough quality reached.')
+                return formated_values(particle_output, stage, best_position,
+                                       initial_best_position, it,
+                                       best_positions, best_values)
 
         if debug:
             print('Best after iteration {:}: {:} {:}'.format(it, best_position,

@@ -83,4 +83,4 @@ class TestCallsStage(TestCase):
         """Test returning output."""
         tested_object = CallsStage('name', MAX_CALLS)
         result = tested_object.get_output_of_stage()
-        self.assertIsNone(result)
+        self.assertEqual([], result)

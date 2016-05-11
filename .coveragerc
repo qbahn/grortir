@@ -4,3 +4,4 @@ omit =
     */env/*
     */test/*
     */grortir/externals/*
+    */grortir/scripts/*

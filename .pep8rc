@@ -3,4 +3,4 @@
 # E501: line too long (checked by PyLint)
 ignore = E501
 
-exclude=grortir/externals
+exclude=grortir/externals,grortir/scripts

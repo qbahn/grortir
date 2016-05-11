@@ -2,3 +2,4 @@
 # Ignore legacy files
 scent.py
 grortir/externals/**
+grortir/scripts/**

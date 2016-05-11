@@ -44,7 +44,7 @@ class TestOptimizer(TestCase):
         """Test optimization of initial stage in process."""
         optimizer = Optimizer(self.some_process)
         result = optimizer.optimize_process()
-        pso_mock.assert_called_once_with(self.first_stage)
+        pso_mock.assert_called_once_with(self.first_stage, swarmsize=40)
         self.assertFalse(result)
 
     @patch('grortir.main.optimizers.optimizer.pso')
@@ -55,7 +55,7 @@ class TestOptimizer(TestCase):
         self.first_stage.get_output_of_stage = Mock(return_value=sentinel)
         self.second_stage.optimization_status = OptimizationStatus.success
         result = optimizer.optimize_process()
-        pso_mock.assert_called_with(self.second_stage)
+        pso_mock.assert_called_with(self.second_stage, swarmsize=40)
         self.assertTrue(result)
 
     @patch('grortir.main.optimizers.optimizer.pso')

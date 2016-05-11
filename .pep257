@@ -4,4 +4,4 @@
 # uncomment line below to ignore D202 rule.
 # add-ignore = D202
 
-match-dir='^((?!grortir\/externals).)*$'
+match-dir='^((?!grortir\/externals).)*((?!grortir\/scripts).)*$'

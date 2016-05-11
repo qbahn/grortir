@@ -13,3 +13,4 @@ tools:
 filter:
     excluded_paths:
         - "grortir/externals/"
+        - "grortir/scripts/"
