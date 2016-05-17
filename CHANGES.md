@@ -1,7 +1,11 @@
 # Revision History
 
-## 0.1.7 (2016/??/??)
+## 0.1.7 (2016/05/17)
 	Implement Calls Stage.
+	Update pylint settings.
+	Add pyswarm code.
+	Implement optimization of single stage.
+	Implement optimizer (Class for optimize whole process sequentially.)
 
 ## 0.1.6 (2016/03/26)
 	Fixing deployment configuration.
