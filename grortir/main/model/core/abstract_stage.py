@@ -7,10 +7,9 @@ class AbstractStage:
     """Class represent single stage in process.
 
     Attributes:
-        input_vector (tuple): initial vector
+        input_vector (list): initial vector
         optimization_status (OptimizationStatus): status of optimization
         control_params (list): actual control params
-        current_vector (list): vector of actual input vector
         lower_bounds (list): lower bounds for control params
         upper_bounds (list): upper bounds for control params
 
@@ -25,7 +24,6 @@ class AbstractStage:
         self.input_vector = input_vector
         self.optimization_status = OptimizationStatus.not_started
         self.control_params = np.zeros_like(input_vector)
-        self.current_vector = list(self.input_vector)
         dimensions = len(input_vector)
         self.lower_bounds = [0] * dimensions
         self.upper_bounds = [1] * dimensions

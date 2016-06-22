@@ -23,10 +23,10 @@ class TestAbstractStage(TestCase):
 
     def test___init__output_mutability(self):
         """Check fields in object."""
-        input_vector = (1, 2, 3)
+        input_vector = [1, 2, 3]
         tested_object = AbstractStage(input_vector)
-        tested_object.current_vector[2] += 1
-        self.assertEqual(tested_object.current_vector[2], 4)
+        tested_object.input_vector[2] += 1
+        self.assertEqual(tested_object.input_vector[2], 4)
 
     def test_get_cost(self):
         """Check get_cost method."""

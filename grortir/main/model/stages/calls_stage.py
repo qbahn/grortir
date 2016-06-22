@@ -14,7 +14,7 @@ class CallsStage(AbstractStage):
     """
 
     def __init__(self, name, max_calls, input_vector=(),
-                 maximum_acceptable_quality=1e-4):
+                 maximum_acceptable_quality=0.001):
         """Constructor."""
         super().__init__(input_vector)
         self.max_calls = max_calls
@@ -45,13 +45,13 @@ class CallsStage(AbstractStage):
 
         Raises:
             AssertionError: If length of `control_params`
-                is not equal length of `current_vector`
+                is not equal length of `input_vector`
         """
-        assert len(control_params) == len(self.current_vector)
+        assert len(control_params) == len(self.input_vector)
         quality = 0
         for i in enumerate(control_params):
-            quality += (control_params[i[0]] - self.current_vector[
-                i[0]]) ** 2
+            quality += abs(control_params[i[0]] - self.input_vector[
+                i[0]])
         return quality
 
     def get_cost(self):

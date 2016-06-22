@@ -49,7 +49,7 @@ def pso(stage=AbstractStage(), ieqcons=[], f_ieqcons=None, args=(), kwargs={},
     stage : AbstractStage
         Stage which should be optimized.
     ieqcons : list
-        A list of functions of length n such that ieqcons[j](x,*args) >= 0.0 in
+        A list of functions of length n such that ieqcons[j](x_positions_of_swarm,*args) >= 0.0 in
         a successfully optimized problem (Default: [])
     f_ieqcons : function
         Returns a 1-D array in which each element must be greater or equal
@@ -141,32 +141,31 @@ def pso(stage=AbstractStage(), ieqcons=[], f_ieqcons=None, args=(), kwargs={},
         mp_pool = multiprocessing.Pool(processes)
 
     # Initialize the particle swarm ############################################
-    S = swarmsize
-    D = len(lb)  # the number of dimensions each particle has
-    x = np.random.rand(S, D)  # particle positions
-    v = np.zeros_like(x)  # particle velocities
-    best_positions = np.zeros_like(x)  # best particle positions
-    current_func_values = np.zeros(S)  # current particle function values
-    feasibility = np.zeros(S, dtype=bool)  # feasibility of each particle
-    best_values = np.ones(S) * np.inf  # best particle function values
-    best_position = []  # best swarm position
+    Swarm_size = swarmsize
+    Dimensions = len(lb)  # the number of dimensions each particle has
+    x_positions_of_swarm = np.random.rand(Swarm_size, Dimensions)  # particle positions
+    velocity_of_particles = np.zeros_like(x_positions_of_swarm)  # particle velocities
+    best_positions = np.zeros_like(x_positions_of_swarm)  # best particle positions
+    current_func_values = np.zeros(Swarm_size)  # current particle function values
+    feasibility = np.zeros(Swarm_size, dtype=bool)  # feasibility of each particle
+    best_values = np.ones(Swarm_size) * np.inf  # best particle function values
     initial_best_position = np.inf  # best swarm position starting value
 
     # Initialize the particle's position
-    x = lb + x * (ub - lb)
+    x_positions_of_swarm = lb + x_positions_of_swarm * (ub - lb)
 
     # Calculate objective and constraints for each particle
     if processes > 1:
-        current_func_values = np.array(mp_pool.map(obj, x))
-        feasibility = np.array(mp_pool.map(is_feasible, x))
+        current_func_values = np.array(mp_pool.map(obj, x_positions_of_swarm))
+        feasibility = np.array(mp_pool.map(is_feasible, x_positions_of_swarm))
     else:
-        for i in range(S):
-            current_func_values[i] = obj(x[i, :])
-            feasibility[i] = is_feasible(x[i, :])
+        for i in range(Swarm_size):
+            current_func_values[i] = obj(x_positions_of_swarm[i, :])
+            feasibility[i] = is_feasible(x_positions_of_swarm[i, :])
 
     # Store particle's best position (if constraints are satisfied)
     i_update = np.logical_and((current_func_values < best_values), feasibility)
-    best_positions[i_update, :] = x[i_update, :].copy()
+    best_positions[i_update, :] = x_positions_of_swarm[i_update, :].copy()
     best_values[i_update] = current_func_values[i_update]
 
     # Update swarm's best position
@@ -177,40 +176,40 @@ def pso(stage=AbstractStage(), ieqcons=[], f_ieqcons=None, args=(), kwargs={},
     else:
         # At the start, there may not be any feasible starting point, so just
         # give it a temporary "best" point since it's likely to change
-        best_position = x[0, :].copy()
+        best_position = x_positions_of_swarm[0, :].copy()
 
     # Initialize the particle's velocity
-    v = vlow + np.random.rand(S, D) * (vhigh - vlow)
+    velocity_of_particles = vlow + np.random.rand(Swarm_size, Dimensions) * (vhigh - vlow)
 
     # Iterate until termination criterion met ##################################
     it = 1
     while it <= maxiter and stage.could_be_optimized():
-        rp = np.random.uniform(size=(S, D))
-        rg = np.random.uniform(size=(S, D))
+        rp = np.random.uniform(size=(Swarm_size, Dimensions))
+        rg = np.random.uniform(size=(Swarm_size, Dimensions))
 
         # Update the particles velocities
-        v = omega * v + phip * rp * (best_positions - x) + phig * rg * (
-            best_position - x)
+        velocity_of_particles = omega * velocity_of_particles + phip * rp * (best_positions - x_positions_of_swarm) + phig * rg * (
+            best_position - x_positions_of_swarm)
         # Update the particles' positions
-        x = x + v
+        x_positions_of_swarm = x_positions_of_swarm + velocity_of_particles
         # Correct for bound violations
-        maskl = x < lb
-        masku = x > ub
-        x = x * (~np.logical_or(maskl, masku)) + lb * maskl + ub * masku
+        maskl = x_positions_of_swarm < lb
+        masku = x_positions_of_swarm > ub
+        x_positions_of_swarm = x_positions_of_swarm * (~np.logical_or(maskl, masku)) + lb * maskl + ub * masku
 
         # Update objectives and constraints
         if processes > 1:
-            current_func_values = np.array(mp_pool.map(obj, x))
-            feasibility = np.array(mp_pool.map(is_feasible, x))
+            current_func_values = np.array(mp_pool.map(obj, x_positions_of_swarm))
+            feasibility = np.array(mp_pool.map(is_feasible, x_positions_of_swarm))
         else:
-            for i in range(S):
-                current_func_values[i] = obj(x[i, :])
-                feasibility[i] = is_feasible(x[i, :])
+            for i in range(Swarm_size):
+                current_func_values[i] = obj(x_positions_of_swarm[i, :])
+                feasibility[i] = is_feasible(x_positions_of_swarm[i, :])
 
         # Store particle's best position (if constraints are satisfied)
         i_update = np.logical_and((current_func_values < best_values),
                                   feasibility)
-        best_positions[i_update, :] = x[i_update, :].copy()
+        best_positions[i_update, :] = x_positions_of_swarm[i_update, :].copy()
         best_values[i_update] = current_func_values[i_update]
 
         # Compare swarm's best position with global best position
