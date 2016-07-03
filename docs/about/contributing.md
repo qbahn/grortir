@@ -28,7 +28,7 @@ Docker will provide for you proper environment.
 To create proper docker image type:
 
 ```
-$ docker build --tag=grortir:completeEnv --no-cache $PATH_TO_SOURCE_DIR
+$ docker build --tag=grortir:completeEnvironment --no-cache $PATH_TO_SOURCE_DIR
 ```
 
 In the end, at one of the latest lines you should see message:
@@ -36,10 +36,11 @@ In the end, at one of the latest lines you should see message:
 touch env/.all  # flag to indicate all setup steps were successful
 ```
 
-After that, you can run your docker image and start using alredy created environment.
+After that, you can run your docker image and start using already created environment.
 ```
 docker run -i -t --name dockerGrortir -v $PATH_TO_SOURCE_DIR:/src/usr/currentGrortir  grortir:completeEnvironment /bin/bash
 ```
+It's recommended to use absolute path in ```$PATH_TO_SOURCE_DIR```.
 In result you will be moved to new bash which exist in your new created docker instance.
 Now you can go to your directory:
 ```
