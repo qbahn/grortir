@@ -28,7 +28,7 @@ Docker will provide for you proper environment.
 To create proper docker image type:
 
 ```
-$ docker build --tag=grortir:completeEnv --no-cache $PATH_TO_ROOT_GRORTIR_DIR
+$ docker build --tag=grortir:completeEnv --no-cache $PATH_TO_SOURCE_DIR
 ```
 
 In the end, at one of the latest lines you should see message:
