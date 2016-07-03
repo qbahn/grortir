@@ -5,4 +5,4 @@ RUN git clone https://github.com/qbahn/grortir.git /src/usr/grortir
 WORKDIR /src/usr/grortir
 RUN apt-get update
 RUN cat ./required-system-packages.txt | xargs apt-get install -y
-RUN make ci
+RUN make

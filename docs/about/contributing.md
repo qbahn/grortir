@@ -10,6 +10,8 @@
     * Linux: http://www.gnu.org/software/make (likely already installed)
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
+Up-to-date requirements are listed in file 
+```required-system-packages.txt```
 
 ### Installation
 
@@ -18,6 +20,33 @@ Create a virtual environment:
 ```
 $ make env
 ```
+
+### Setup with Docker
+If you have any problems with creating your environment etc. You can use Docker.
+Docker will provide for you proper environment.
+
+To create proper docker image type:
+
+```
+$ docker build --tag=grortir:completeEnv --no-cache $PATH_TO_ROOT_GRORTIR_DIR
+```
+
+In the end, at one of the latest lines you should see message:
+```
+touch env/.all  # flag to indicate all setup steps were successful
+```
+
+After that, you can run your docker image and start using alredy created environment.
+```
+docker run -i -t --name dockerGrortir -v $PATH_TO_SOURCE_DIR:/src/usr/currentGrortir  grortir:completeEnvironment /bin/bash
+```
+In result you will be moved to new bash which exist in your new created docker instance.
+Now you can go to your directory:
+```
+cd /src/usr/currentGrortir
+```
+and type 'make env' or 'make ci'. 
+As you can see your environment is properly configured.
 
 ## Development Tasks
 
