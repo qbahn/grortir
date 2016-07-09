@@ -27,3 +27,6 @@ class TestGroupedOptimizer(TestCase):
         optimizer = GroupedOptimizer(self.some_process)
         self.assertIsNotNone(optimizer)
         self.assertEqual(optimizer.process, self.some_process)
+
+    def test_calling_functions(self):
+        """Test correct order of calling function."""
