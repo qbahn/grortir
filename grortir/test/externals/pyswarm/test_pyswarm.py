@@ -89,7 +89,7 @@ def myfunc(input_vector):
         input_vector (list): input vector
 
     Returns:
-        object : value of function
+        float: value of function
     """
     x_1 = input_vector[0]
     x_2 = input_vector[1]

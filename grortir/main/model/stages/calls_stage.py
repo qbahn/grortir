@@ -28,7 +28,7 @@ class CallsStage(AbstractStage):
         Return quality of actual output.
 
         Returns:
-            quality (float): quality
+            float: quality
 
         """
         if control_params is None:
@@ -41,7 +41,7 @@ class CallsStage(AbstractStage):
         Function for calculating quality.
 
         Returns:
-            quality (float): quality
+            float: quality
 
         Raises:
             AssertionError: If length of `control_params`
@@ -59,7 +59,7 @@ class CallsStage(AbstractStage):
         Return actual cost of stage.
 
         Returns:
-            cost (float): cost
+            float: cost
         """
         return self.cost
 

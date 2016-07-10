@@ -23,8 +23,11 @@ class Optimizer(object):
 
     def optimize_process(self):
         """Optimize process.
+        Raises:
+            AttributeError: When project has incorrect structure.
+
         Returns:
-            True if success, False otherwise."""
+            bool: True if success, False otherwise."""
         for stage in self.ordered_stages:
             if not self.process.predecessors(stage):
                 self.run_pso(stage)
