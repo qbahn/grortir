@@ -28,7 +28,10 @@ class CallsProcessFactory:
     def _update_structure(self):
         """Update structure of process."""
         if self.structure_type == "linear":
-            self.process.add_path(self._stages_to_add)
+            if len(self._stages_to_add)>1:
+                self.process.add_path(self._stages_to_add)
+            else:
+                self.process.add_node(self._stages_to_add[0])
         else:
             raise NotImplementedError()
 

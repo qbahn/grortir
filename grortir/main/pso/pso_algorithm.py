@@ -7,9 +7,11 @@ from grortir.main.pso.whole_group_pso import WholeGroupPso
 class PsoAlgorithm:
     """Optimize process with different strategies."""
 
-    def __init__(self, process, strategy, number_of_particle=40):
+    def __init__(self, process, grouping_strategy, optimization_startegy,
+                 number_of_particle=40):
         self.process = process
-        self.strategy = strategy
+        self.grouping_strategy = grouping_strategy
+        self.optimization_strategy = optimization_startegy
         self.process_validator = ProcessValidator()
         self.whole_group_pso = WholeGroupPso(self.process, number_of_particle)
 
@@ -17,8 +19,11 @@ class PsoAlgorithm:
         """Run algorithm."""
         self.process_validator.validate(self.process)
         self.process.optimizationStatus = OptimizationStatus.in_progress
-        number_of_groups = self.strategy.get_actual_numbers_of_groups()
+        number_of_groups = self.grouping_strategy.get_actual_numbers_of_groups()
         for current_group_number in range(number_of_groups):
-            current_stages = self.strategy.get_items_from_group(
+            current_stages = self.grouping_strategy.get_items_from_group(
                 current_group_number)
-            self.whole_group_pso.optimize(current_stages)
+            group_optimization_strategy = self.optimization_strategy.getGroupOptimizationStrategy(
+                current_stages)
+            self.whole_group_pso.optimize(current_stages,
+                                          group_optimization_strategy)

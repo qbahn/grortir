@@ -23,7 +23,7 @@ class CallsStage(AbstractStage):
         self.maximum_acceptable_quality = maximum_acceptable_quality
         self.cost = 0
 
-    def get_quality(self, control_params=None):
+    def get_quality(self, input_vector=None, control_params=None):
         """
         Return quality of actual output.
 
@@ -34,9 +34,9 @@ class CallsStage(AbstractStage):
         if control_params is None:
             control_params = self.control_params[:]
         self.cost += 1
-        return self.calculate_quality(control_params)
+        return self.calculate_quality(input_vector, control_params)
 
-    def calculate_quality(self, control_params):
+    def calculate_quality(self, input_vector, control_params):
         """
         Function for calculating quality.
 
@@ -47,11 +47,11 @@ class CallsStage(AbstractStage):
             AssertionError: If length of `control_params`
                 is not equal length of `input_vector`
         """
-        assert len(control_params) == len(self.input_vector)
+        assert len(control_params) == len(input_vector)
         quality = 0
         for i in enumerate(control_params):
-            quality += abs(control_params[i[0]] - self.input_vector[
-                i[0]])
+            quality += (control_params[i[0]] - input_vector[
+                i[0]]) ** 2
         return quality
 
     def get_cost(self):
@@ -71,6 +71,9 @@ class CallsStage(AbstractStage):
         """Return True if value is proper quality."""
         return value <= self.maximum_acceptable_quality
 
-    def get_output_of_stage(self):
+    def get_output_of_stage(self, input_vector, control_params):
         """Return output of stage."""
-        return self.control_params
+        return control_params
+
+    def __str__(self):
+        return self.name

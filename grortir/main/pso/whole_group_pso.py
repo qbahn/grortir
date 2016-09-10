@@ -1,6 +1,5 @@
 """Contains WholeGroupPso class."""
 from grortir.main.pso.optimization_controller import OptimizationController
-from grortir.main.pso.swarm import Swarm
 
 from grortir.main.pso.swarm import Swarm
 
@@ -12,7 +11,7 @@ class WholeGroupPso(object):
         self.process = process
         self.number_of_particles = number_of_particles
 
-    def optimize(self, ordered_stages_to_optimize):
+    def optimize(self, ordered_stages_to_optimize, group_optimization_strategy):
         """Optimize whole group of stages.
 
             Parameters:
@@ -22,6 +21,7 @@ class WholeGroupPso(object):
         swarm = Swarm(self.process, ordered_stages_to_optimize,
                       self.number_of_particles)
         swarm.initialize()
-        while OptimizationController.should_continue(
-                ordered_stages_to_optimize):
+        group_optimization_strategy.initialize()
+        while group_optimization_strategy.should_continue(swarm.best_particle):
             swarm.do_single_iteration()
+        print("Optimization for group finished.")

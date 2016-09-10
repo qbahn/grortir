@@ -6,6 +6,7 @@ from grortir.main.pso.particle import Particle
 
 class Swarm(object):
     """Class which represent swarm."""
+
     def __init__(self, process, stages, number_of_particles):
         self.stages = stages
         self.process = process
@@ -37,4 +38,4 @@ class Swarm(object):
 
     def _update_velocieties(self):
         for particle in self.particles:
-            particle.update_velocieties(self.best_particle)
+            particle.update_velocities(self.best_particle)

@@ -25,7 +25,7 @@ class AbstractStage:
         self.optimization_status = OptimizationStatus.not_started
         self.control_params = np.zeros_like(input_vector)
         dimensions = len(input_vector)
-        self.lower_bounds = [0] * dimensions
+        self.lower_bounds = [-1] * dimensions
         self.upper_bounds = [1] * dimensions
 
     @staticmethod
@@ -34,7 +34,7 @@ class AbstractStage:
         raise NotImplementedError
 
     @staticmethod
-    def get_quality(control_params=None):
+    def get_quality(control_params=None, input_vector=None):
         """Return quality of stage."""
         raise NotImplementedError
 
