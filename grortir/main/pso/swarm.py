@@ -39,3 +39,12 @@ class Swarm(object):
     def _update_velocieties(self):
         for particle in self.particles:
             particle.update_velocities(self.best_particle)
+
+    def post_processing(self):
+        self.best_particle.current_control_params = self.best_particle.best_positions
+        self.best_particle.current_input = self.best_particle.input_vectors_for_best_pos
+        for stage in self.stages:
+            stage.control_params = self.best_particle.best_positions[stage]
+        self.best_particle.update_input_vectors()
+        # input vectors for best particle is output (x) vector
+

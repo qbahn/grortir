@@ -24,4 +24,5 @@ class WholeGroupPso(object):
         group_optimization_strategy.initialize()
         while group_optimization_strategy.should_continue(swarm.best_particle):
             swarm.do_single_iteration()
+        swarm.post_processing()
         print("Optimization for group finished.")

@@ -21,6 +21,7 @@ class Particle(object):
         self.current_quality = {}
         self.best_quality = np.inf
         self.best_positions = {}
+        self.input_vectors_for_best_pos = {}
         self.current_control_params = OrderedDict()
         self.current_input = {}
 
@@ -57,6 +58,7 @@ class Particle(object):
             self.best_quality = current_quality
             for stage in self.stages:
                 self.best_positions[stage] = self.current_control_params[stage]
+                self.input_vectors_for_best_pos[stage] = self.current_input[stage]
 
     def update_input_vectors(self):
         """Update input vectors in all stages."""

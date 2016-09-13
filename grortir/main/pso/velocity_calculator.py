@@ -32,6 +32,8 @@ class VelocityCalculator:
         """Calculate velocity."""
         rand_1 = np.random.rand()
         rand_2 = np.random.rand()
+        print("rand_1 = " + str(rand_1))
+        print("rand_2 = " + str(rand_2))
         velocities = {}
         for stage in control_params:
             s0 = self._s0(current_velocities[stage])
