@@ -16,31 +16,44 @@ class VelocityCalculator:
         self.w_factor = 0.8
         self.current_velocity = None
 
-    def calculate_initial_velocity(self, control_params):
+    @staticmethod
+    def calculate_initial_velocity(control_params):
         """Calculate initial velocity."""
-        velocity = 0.02 * np.random.rand(len(control_params)) - 0.01
-        self.current_velocity = velocity
-        return velocity
+        velocities = {}
+        for stage in control_params:
+            random_factor = np.random.rand(len(control_params[stage]))
+            velocity = 0.02 * random_factor - 0.01
+            velocities[stage] = velocity
+        return velocities
 
-    def calculate(self, particle_best_position, leader_best_position,
+    def calculate(self, current_velocities, particle_best_positions,
+                  leader_best_positions,
                   control_params):
         """Calculate velocity."""
-        s0 = self._s0()
-        s1 = self.c_1 * self._s1(leader_best_position, control_params)
-        s2 = self.c_2 * self._s2(particle_best_position, control_params)
-        velocity = s0 + s1 + s2
-        self.current_velocity = velocity
-        return velocity
+        rand_1 = np.random.rand()
+        rand_2 = np.random.rand()
+        velocities = {}
+        for stage in control_params:
+            s0 = self._s0(current_velocities[stage])
+            s1 = self.c_1 * self._s1(rand_1, leader_best_positions[stage],
+                                     control_params[stage])
+            s2 = self.c_2 * self._s2(rand_2, particle_best_positions[stage],
+                                     control_params[stage])
+            velocity = s0 + s1 + s2
+            velocities[stage] = velocity
+        return velocities
 
-    def _s2(self, particle_best_position, control_params):
-        return np.random.rand(len(control_params)) * (
+    @staticmethod
+    def _s2(random_factor, particle_best_position, control_params):
+        return random_factor * (
             np.asarray(particle_best_position) - np.asarray(
                 control_params))
 
-    def _s1(self, leader_best_position, control_params):
-        return np.random.rand(len(control_params)) * (
+    @staticmethod
+    def _s1(random_factor, leader_best_position, control_params):
+        return random_factor * (
             np.asarray(leader_best_position) - np.asarray(
                 control_params))
 
-    def _s0(self):
-        return self.w_factor * self.current_velocity
+    def _s0(self, current_velocity):
+        return self.w_factor * current_velocity

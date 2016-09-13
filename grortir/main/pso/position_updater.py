@@ -10,27 +10,32 @@ class PositionUpdater:
             stage (AbstractStage): Stage in which we are going to move.
             control_params (dict): Control params for stages.
     """
-    def __init__(self, stage, control_params):
-        self.stage = stage
+
+    def __init__(self, control_params):
         self.control_params = control_params
-        self.lower_bounds = np.asarray(self.stage.lower_bounds)
-        self.upper_bounds = np.asarray(self.stage.upper_bounds)
 
-    def set_initial_control_params(self):
+    def set_initial_control_params(self, control_params):
         """Set initial positions."""
-        random = np.random.rand(len(self.control_params[self.stage]))
-        delta = self.upper_bounds - self.lower_bounds
-        control_params = self.lower_bounds + random * delta
-        self.control_params[self.stage] = control_params.tolist()
+        for stage in control_params:
+            random = np.random.rand(len(control_params[stage]))
+            delta = np.asarray(stage.upper_bounds) - np.asarray(
+                stage.lower_bounds)
+            new_control_params = np.asarray(stage.lower_bounds) + random * delta
+            control_params[stage] = new_control_params.tolist()
+        return control_params
 
-    def update_position(self, velocity):
+    def update_position(self, velocities, control_params):
         """Update positions."""
-        self.control_params[self.stage] = self.control_params[self.stage] + velocity
-        self._fix_coordinates()
+        for stage in velocities:
+            new_control_params = control_params[stage] + velocities[stage]
+            control_params[stage] = self._fix_coordinates(stage,
+                                                          new_control_params)
+        return control_params
 
-    def _fix_coordinates(self):
-        for i in range(len(self.control_params[self.stage])):
-            if self.control_params[self.stage][i] > self.stage.upper_bounds[i]:
-                self.control_params[self.stage][i] = self.stage.upper_bounds[i]
-            elif self.control_params[self.stage][i] < self.stage.lower_bounds[i]:
-                self.control_params[self.stage][i] = self.stage.lower_bounds[i]
+    def _fix_coordinates(self, stage, control_params):
+        for i in range(len(control_params)):
+            if control_params[i] > stage.upper_bounds[i]:
+                control_params[i] = stage.upper_bounds[i]
+            elif control_params[i] < stage.lower_bounds[i]:
+                control_params[i] = stage.lower_bounds[i]
+        return control_params

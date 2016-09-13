@@ -1,3 +1,6 @@
+from unittest import  TestCase
+from unittest.mock import patch
+
 import networkx as nx
 
 from grortir.main.model.processes.factories.calls_process_factory import \
@@ -8,25 +11,32 @@ from grortir.main.pso.calls_optimization_strategy import \
     CallsOptimizationStrategy
 from grortir.main.pso.pso_algorithm import PsoAlgorithm
 
-how_many_particles = 2
-calls_factory = CallsProcessFactory("linear", 10, how_many_particles*1000, [0, 0, 0, 0])
-process = calls_factory.construct_process()
 
-ordered_stages = nx.topological_sort(process)
+class TestLinearRVT(TestCase):
+    #@patch('grortir.main.optimizers.optimizer.pso')
+    def test_RVT(self):
+        how_many_particles = 2
+        calls_factory = CallsProcessFactory("linear", 10,
+                                            how_many_particles * 1000,
+                                            [0, 0, 0, 0])
+        process = calls_factory.construct_process()
 
-# process = CallsProcess()
-# stage = CallsStage("stage_name", 1000, [0])
-# process.add_node(stage)
-# ordered_stages = [stage]
+        ordered_stages = nx.topological_sort(process)
 
-grouping_strategy = GroupingStrategy(ordered_stages)
-grouping_strategy.define_group(ordered_stages)
-optimization_startegy = CallsOptimizationStrategy()
+        # process = CallsProcess()
+        # stage = CallsStage("stage_name", 1000, [0])
+        # process.add_node(stage)
+        # ordered_stages = [stage]
 
-pso_algortihm = PsoAlgorithm(process, grouping_strategy, optimization_startegy,
-                             how_many_particles)
-optimizer = GroupedOptimizer(process, grouping_strategy, pso_algortihm)
+        grouping_strategy = GroupingStrategy(ordered_stages)
+        grouping_strategy.define_group(ordered_stages)
+        optimization_startegy = CallsOptimizationStrategy()
 
-optimizer.optimize_process()
+        pso_algortihm = PsoAlgorithm(process, grouping_strategy,
+                                     optimization_startegy,
+                                     how_many_particles)
+        optimizer = GroupedOptimizer(process, grouping_strategy, pso_algortihm)
 
-optimizer.result
+        optimizer.optimize_process()
+
+        optimizer.result

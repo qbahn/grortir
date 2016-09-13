@@ -1,6 +1,7 @@
 """Representation of a particle in swarm."""
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=redefined-variable-type
+from collections import OrderedDict
 
 import numpy as np
 
@@ -15,13 +16,12 @@ class Particle(object):
     def __init__(self, stages, process):
         self.stages = stages
         self.process = process
-        self.position_updaters = {}
-        self.velocity_calculators = {}
+        self.velocity_calculator = VelocityCalculator()
         self.current_velocities = {}
         self.current_quality = {}
         self.best_quality = np.inf
         self.best_positions = {}
-        self.current_control_params = {}
+        self.current_control_params = OrderedDict()
         self.current_input = {}
 
     def initialize(self):
@@ -29,23 +29,20 @@ class Particle(object):
         for stage in self.stages:
             self.current_control_params[stage] = stage.control_params
             self.current_input[stage] = stage.input_vector
-            self.position_updaters[stage] = PositionUpdater(stage,
-                                                            self.current_control_params)
-            self.velocity_calculators[stage] = VelocityCalculator()
+
             stage.optimization_status = OptimizationStatus.in_progress
             self.current_quality[stage] = np.inf
+        self.position_updater = PositionUpdater(self.current_control_params)
         self._set_initial_positions()
         self._set_initial_velocities()
 
     def _set_initial_positions(self):
-        for stage in self.stages:
-            self.position_updaters[stage].set_initial_control_params()
+        self.current_control_params = self.position_updater.set_initial_control_params(
+            self.current_control_params)
 
     def _set_initial_velocities(self):
-        for stage in self.stages:
-            self.current_velocities[stage] = self.velocity_calculators[
-                stage].calculate_initial_velocity(
-                self.current_control_params[stage])
+        self.current_velocities = self.velocity_calculator.calculate_initial_velocity(
+            self.current_control_params)
 
     def update_values(self):
         """Update values in swarm."""
@@ -74,7 +71,8 @@ class Particle(object):
     def calculate_current_quality(self):
         """Calculate current quality."""
         for stage in self.stages:
-            self.current_quality[stage] = stage.get_quality(self.current_input[stage],
+            self.current_quality[stage] = stage.get_quality(
+                self.current_input[stage],
                 self.current_control_params[stage])
 
     def get_the_overall_quality(self):
@@ -84,18 +82,17 @@ class Particle(object):
 
     def move(self):
         """Move particle."""
-        for stage in self.stages:
-            velocity = self.current_velocities[stage]
-            self.position_updaters[stage].update_position(velocity)
+        self.current_control_params = self.position_updater.update_position(
+            self.current_velocities, self.current_control_params)
 
     def update_velocities(self, best_particle):
         """Update velocities in swarm."""
-        for stage in self.stages:
-            velocity = self.velocity_calculators[stage].calculate(
-                self.best_positions[stage],
-                best_particle.best_positions[stage],
-                self.current_control_params[stage])
-            self.current_velocities[stage] = velocity
+        velocity = self.velocity_calculator.calculate(
+            self.current_velocities,
+            self.best_positions,
+            best_particle.best_positions,
+            self.current_control_params)
+        self.current_velocities = velocity
 
     def _update_stages_status(self):
         for stage in self.stages:

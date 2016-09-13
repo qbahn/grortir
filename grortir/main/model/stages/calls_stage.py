@@ -14,7 +14,7 @@ class CallsStage(AbstractStage):
     """
 
     def __init__(self, name, max_calls, input_vector=(),
-                 maximum_acceptable_quality=0.001):
+                 maximum_acceptable_quality=0.01):
         """Constructor."""
         super().__init__(input_vector)
         self.max_calls = max_calls
