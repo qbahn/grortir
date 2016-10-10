@@ -20,7 +20,8 @@ class TestCallsStage(TestCase):
         tested_object.control_params = CONTRL_PARAMS
         result = CallsStage.get_quality(tested_object, CONTRL_PARAMS)
         self.assertEqual(tested_object.cost, 8)
-        tested_object.calculate_quality.assert_called_with(CONTRL_PARAMS)
+        tested_object.calculate_quality.assert_called_with(CONTRL_PARAMS,
+                                                           CONTRL_PARAMS)
         self.assertEqual(result, sentinel.quality)
 
     def test_get_quality_without_vector(self):
@@ -31,7 +32,7 @@ class TestCallsStage(TestCase):
         tested_object.control_params = CONTRL_PARAMS
         CallsStage.get_quality(tested_object)
         self.assertEqual(tested_object.cost, 10)
-        tested_object.calculate_quality.assert_called_with(CONTRL_PARAMS)
+        tested_object.calculate_quality.assert_called_with(None, CONTRL_PARAMS)
 
     def test_get_cost(self):
         """Test for get_cost method."""
@@ -46,14 +47,16 @@ class TestCallsStage(TestCase):
         tested_object = CallsStage('name', MAX_CALLS, input_vector)
         tested_object.control_params = [2, 2]
         with self.assertRaises(AssertionError):
-            tested_object.calculate_quality(tested_object.control_params)
+            tested_object.calculate_quality(input_vector,
+                                            tested_object.control_params)
 
     def test_calculate_quality_ok(self):
         """Test case when control params and input are okay."""
         input_vector = (2, 3, 4, 5, 6, 1)
         tested_object = CallsStage('name', MAX_CALLS, input_vector)
         tested_object.control_params = CONTRL_PARAMS
-        result = tested_object.calculate_quality(tested_object.control_params)
+        result = tested_object.calculate_quality(input_vector,
+                                                 tested_object.control_params)
         self.assertEqual(result, 55.25)
 
     def test_could_be_optimized_pos(self):
@@ -82,5 +85,5 @@ class TestCallsStage(TestCase):
     def test_get_output_of_stage(self):
         """Test returning output."""
         tested_object = CallsStage('name', MAX_CALLS)
-        result = tested_object.get_output_of_stage()
+        result = tested_object.get_output_of_stage([], [])
         self.assertEqual([], result)

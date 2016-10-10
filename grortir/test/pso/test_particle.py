@@ -13,14 +13,12 @@ class TestParticle(TestCase):
         self.particle_mock = Mock()
         self.stages = [Mock(), Mock()]
         self.position_updaters = {stage: Mock() for stage in self.stages}
-        self.velocity_calculators = {stage: Mock() for stage in self.stages}
+        self.velocity_calculator = Mock()
         for i in range(len(self.stages)):
-            stage = self.stages[i]
-            self.velocity_calculators[
-                stage].calculate_initial_velocity.return_value = 0.01 * (i + 1)
+            self.velocity_calculator.calculate_initial_velocity.return_value = 0.01 * (i + 1)
         self.particle_mock.stages = self.stages
         self.particle_mock.position_updaters = self.position_updaters
-        self.particle_mock.velocity_calculators = self.velocity_calculators
+        self.particle_mock.velocity_calculator = self.velocity_calculator
         self.particle_mock.current_velocities = {}
         self.particle_mock.current_quality = {stage: 100 for stage in
                                               self.stages}
@@ -34,7 +32,7 @@ class TestParticle(TestCase):
         self.assertEqual(result, 3)
 
     def test___init__(self):
-        particle = Particle(self.stages, self.process)
+        particle = Particle(self.stages, self.process, 7)
         self.assertIsNotNone(particle)
         self.assertEqual(particle.best_quality, np.inf)
 

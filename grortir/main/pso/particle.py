@@ -13,9 +13,10 @@ from grortir.main.pso.velocity_calculator import VelocityCalculator
 class Particle(object):
     """Implementation of particle."""
 
-    def __init__(self, stages, process):
+    def __init__(self, stages, process, number):
         self.stages = stages
         self.process = process
+        self.number = number
         self.velocity_calculator = VelocityCalculator()
         self.current_velocities = {}
         self.current_quality = {}

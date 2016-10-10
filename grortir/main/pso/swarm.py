@@ -11,7 +11,7 @@ class Swarm(object):
         self.stages = stages
         self.process = process
         self.number_of_particles = number_of_particles
-        self.particles = [Particle(stages, self.process) for i in
+        self.particles = [Particle(stages, self.process, i) for i in
                           range(number_of_particles)]
         self.best_particle_quality = np.inf
         self.best_particle = self.particles[0]
@@ -33,6 +33,7 @@ class Swarm(object):
     def _update_best_particle(self):
         for particle in self.particles:
             if particle.best_quality < self.best_particle_quality:
+                print("leader: " + str(particle.number +1 ))
                 self.best_particle = particle
                 self.best_particle_quality = particle.best_quality
 
@@ -41,10 +42,18 @@ class Swarm(object):
             particle.update_velocities(self.best_particle)
 
     def post_processing(self):
-        self.best_particle.current_control_params = self.best_particle.best_positions
-        self.best_particle.current_input = self.best_particle.input_vectors_for_best_pos
+        best_control_params = self.best_particle.best_positions
+        # calculate output:
         for stage in self.stages:
-            stage.control_params = self.best_particle.best_positions[stage]
-        self.best_particle.update_input_vectors()
-        # input vectors for best particle is output (x) vector
+            current_output = stage.get_output_of_stage(
+                stage.input_vector, best_control_params[stage])
+            successors = self.process.successors(stage)
+            for successor in successors:
+                successor.input_vector = current_output
+            stage.final_output = current_output
+            stage.final_cost = stage.get_cost()
+            stage.final_quality = stage.get_quality(
+                stage.input_vector, best_control_params[stage])
 
+
+            # input vectors for best particle is output (x) vector

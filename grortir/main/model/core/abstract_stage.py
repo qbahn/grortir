@@ -27,6 +27,9 @@ class AbstractStage:
         dimensions = len(input_vector)
         self.lower_bounds = [-1] * dimensions
         self.upper_bounds = [1] * dimensions
+        self.final_output = None
+        self.final_quality = None
+        self.final_cost = None
 
     @staticmethod
     def get_cost():
@@ -34,7 +37,7 @@ class AbstractStage:
         raise NotImplementedError
 
     @staticmethod
-    def get_quality(control_params=None, input_vector=None):
+    def get_quality(input_vector=None, control_params=None):
         """Return quality of stage."""
         raise NotImplementedError
 
