@@ -1,25 +1,12 @@
 """Basic optimizer."""
-import networkx as nx
 
 from grortir.externals.pyswarm.pso import pso
 from grortir.main.model.core.optimization_status import OptimizationStatus
+from grortir.main.optimizers.base_optimizer import BaseOptimizer
 
 
-class Optimizer(object):
+class Optimizer(BaseOptimizer):
     """Optimizer is object which optimize process."""
-
-    def __init__(self, process):
-        self.process = process
-        self.ordered_stages = nx.topological_sort(self.process)
-        self.swarm_size = 40
-
-    def set_custom_optimizing_order(self, ordered_stages):
-        """Set custom order."""
-        if set(self.ordered_stages) == set(ordered_stages) and len(
-                self.ordered_stages) == len(ordered_stages):
-            self.ordered_stages = ordered_stages
-        else:
-            raise ValueError("List of stages must contain all stages.")
 
     def optimize_process(self):
         """Optimize process.
@@ -33,7 +20,8 @@ class Optimizer(object):
                 self.run_pso(stage)
             elif len(self.process.predecessors(stage)) == 1:
                 predecessor = self.process.predecessors(stage)[0]
-                stage.input_vector = predecessor.get_output_of_stage()
+                stage.input_vector = predecessor.get_output_of_stage(
+                    predecessor.input_vector, predecessor.control_params)
                 self.run_pso(stage)
             else:
                 raise AttributeError('Incorrect process structure.')
