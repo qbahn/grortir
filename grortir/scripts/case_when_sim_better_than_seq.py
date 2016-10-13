@@ -1,4 +1,5 @@
 """Example when Sim is better than  sequential."""
+import matplotlib.pyplot as plt
 import networkx as nx
 
 from grortir.main.model.core.optimization_status import OptimizationStatus
@@ -50,12 +51,34 @@ def calculate_probability_of_success(max_calls, number_of_nodes,
     return results
 
 
+NUMBER_OF_STAGES = [1, 2, 3, 5, 7, 10]
+HOW_MANY_TRIES = 100
+MAX_CALLS = 1000
+
+
+def draw_from_dict(dict_with_results, name="Undefined"):
+    x = []
+    y = []
+    for key, value in dict_with_results.items():
+        x.append(key)
+        y.append(value)
+    plt.plot(x, y, 'ro')
+    plt.savefig(name)
+    plt.show()
+
+
 # key -dimension, value - probability of success
-results_sim = calculate_probability_of_success(1000, [1, 2, 3, 5, 7, 10], 100,
+results_sim = calculate_probability_of_success(MAX_CALLS, NUMBER_OF_STAGES,
+                                               HOW_MANY_TRIES,
                                                "SIM")
+draw_from_dict(results_sim, "SIM_diagram.png")
 # {1: 1.0, 2: 0.95, 3: 0.78, 5: 0.46, 7: 0.06, 10: 0.0}
-results_seq = calculate_probability_of_success(1000, [1, 2, 3, 5, 7, 10], 100,
+
+
+results_seq = calculate_probability_of_success(MAX_CALLS, NUMBER_OF_STAGES,
+                                               HOW_MANY_TRIES,
                                                "SEQ")
+draw_from_dict(results_seq, "SEQ_diagram.png")
 # {1: 1.0, 2: 0.0, 3: 0.0, 5: 0.0, 7: 0.0, 10: 0.0}
 
 print("The End")
