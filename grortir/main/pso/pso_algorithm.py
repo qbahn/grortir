@@ -18,7 +18,7 @@ class PsoAlgorithm:
     def run(self):
         """Run algorithm."""
         self.process_validator.validate(self.process)
-        self.process.optimizationStatus = OptimizationStatus.in_progress
+        self.process.optimization_status = OptimizationStatus.in_progress
         number_of_groups = self.grouping_strategy.get_actual_numbers_of_groups()
         for current_group_number in range(number_of_groups):
             current_stages = self.grouping_strategy.get_items_from_group(
@@ -27,3 +27,11 @@ class PsoAlgorithm:
                 get_group_optimization_strategy(current_stages)
             self.whole_group_pso.optimize(current_stages,
                                           group_optimization_strategy)
+        self._post_processing()
+
+    def _post_processing(self):
+        final_status = OptimizationStatus.success
+        for stage in self.grouping_strategy.ordered_stages:
+            if stage.optimization_status != OptimizationStatus.success:
+                final_status = OptimizationStatus.failed
+        self.process.optimization_status = final_status

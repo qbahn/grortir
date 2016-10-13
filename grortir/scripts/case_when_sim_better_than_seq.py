@@ -1,0 +1,59 @@
+"""Example when Sim is better than  sequential."""
+import networkx as nx
+
+from grortir.main.model.core.optimization_status import OptimizationStatus
+from grortir.main.model.processes.factories.calls_process_factory import \
+    CallsProcessFactory
+from grortir.main.optimizers.grouping_strategy import GroupingStrategy
+from grortir.main.pso.calls_optimization_strategy import \
+    CallsOptimizationStrategy
+from grortir.main.pso.pso_algorithm import PsoAlgorithm
+
+
+def optimization(max_calls, how_many_nodes, method_type):
+    factory = CallsProcessFactory("linear", how_many_nodes, max_calls, (0.216,))
+    process = factory.construct_process()
+    ordered_stages = nx.topological_sort(process)
+    grouping_strategy = GroupingStrategy(ordered_stages)
+    # in sim all stages are in the sam group:
+    if method_type == "SIM":
+        grouping_strategy.define_group(ordered_stages)
+    elif method_type == "SEQ":
+        for stage in ordered_stages:
+            grouping_strategy.define_group([stage])
+    else:
+        raise NotImplementedError
+    calls_optimization_strategy = CallsOptimizationStrategy()
+    pso_algorithm = PsoAlgorithm(process, grouping_strategy,
+                                 calls_optimization_strategy)
+    pso_algorithm.run()
+    return process
+
+
+# sim_optimization(MAX_CALLS, HOW_MANY_NODES)
+def calculate_probability_of_success(max_calls, number_of_nodes,
+                                     number_of_tries, method_type):
+    results = {}
+    for how_many_nodes in number_of_nodes:
+        how_many_success = 0.0
+        how_many_failed = 0.0
+        probability = -1
+        for nr_proby in range(number_of_tries):
+            optimized_process = optimization(max_calls, how_many_nodes,
+                                             method_type)
+            if optimized_process.optimization_status == OptimizationStatus.success:
+                how_many_success += 1
+            else:
+                how_many_failed += 1
+            probability = how_many_success / number_of_tries
+        results[how_many_nodes] = probability
+    return results
+
+
+# key -dimension, value - probability of success
+results_sim = calculate_probability_of_success(1000, [1, 2, 3, 5, 7, 10], 100,
+                                               "SIM")
+results_seq = calculate_probability_of_success(1000, [1, 2, 3, 5, 7, 10], 100,
+                                               "SEQ")
+
+print("The End")
