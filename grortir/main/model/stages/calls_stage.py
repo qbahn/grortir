@@ -1,4 +1,6 @@
 """Module contains class CallsStage."""
+import math
+
 from grortir.main.model.core.abstract_stage import AbstractStage
 
 
@@ -17,7 +19,7 @@ class CallsStage(AbstractStage):
     """
 
     def __init__(self, name, max_calls, input_vector=(),
-                 maximum_acceptable_quality=0.01):
+                 maximum_acceptable_quality=0.3):
         """Constructor."""
         super().__init__(input_vector)
         self.max_calls = max_calls
@@ -53,9 +55,8 @@ class CallsStage(AbstractStage):
         """
         assert len(control_params) == len(input_vector)
         quality = 0
-        for i in enumerate(control_params):
-            quality += (control_params[i[0]] - input_vector[
-                i[0]]) ** 2
+        for i, param in enumerate(control_params):
+            quality += abs(10*input_vector[i] - 2.16) + math.cos(5 * math.pi * control_params[i]) * control_params[i] * (1 - control_params[i] * control_params[i]) + 0.4
         return quality
 
     def get_cost(self):

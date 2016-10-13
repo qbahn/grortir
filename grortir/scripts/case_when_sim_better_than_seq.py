@@ -53,9 +53,9 @@ def calculate_probability_of_success(max_calls, number_of_nodes,
 # key -dimension, value - probability of success
 results_sim = calculate_probability_of_success(1000, [1, 2, 3, 5, 7, 10], 100,
                                                "SIM")
-# {1: 1.0, 2: 1.0, 3: 1.0, 5: 0.88, 7: 0.73, 10: 0.26}
+# {1: 1.0, 2: 0.95, 3: 0.78, 5: 0.46, 7: 0.06, 10: 0.0}
 results_seq = calculate_probability_of_success(1000, [1, 2, 3, 5, 7, 10], 100,
                                                "SEQ")
-# {1: 1.0, 2: 1.0, 3: 1.0, 5: 1.0, 7: 1.0, 10: 1.0}
+# {1: 1.0, 2: 0.0, 3: 0.0, 5: 0.0, 7: 0.0, 10: 0.0}
 
 print("The End")
