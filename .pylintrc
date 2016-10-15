@@ -43,7 +43,7 @@ optimize-ast=no
 
 # Only show warnings with the listed confidence levels. Leave empty to show
 # all. Valid levels: HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED
-confidence=
+confidence=UNDEFINED
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -62,14 +62,14 @@ confidence=
 # --disable=W"
 
 # disable=intern-builtin,fixme,dict-iter-method,import-star-module-level,unpacking-in-except,next-method-called,global-statement,file-builtin,getslice-method,reload-builtin,reduce-builtin,basestring-builtin,nonzero-method,long-suffix,old-octal-literal,indexing-exception,delslice-method,cmp-method,parameter-unpacking,standarderror-builtin,coerce-builtin,round-builtin,using-cmp-argument,raw_input-builtin,old-ne-operator,too-many-public-methods,print-statement,long-builtin,setslice-method,cmp-builtin,xrange-builtin,raising-string,filter-builtin-not-iterating,no-absolute-import,locally-disabled,old-division,unichr-builtin,backtick,old-raise-syntax,hex-method,execfile-builtin,apply-builtin,map-builtin-not-iterating,coerce-method,metaclass-assignment,range-builtin-not-iterating,too-few-public-methods,zip-builtin-not-iterating,unicode-builtin,input-builtin,oct-method,too-many-ancestors,dict-view-method,useless-suppression,buffer-builtin,suppressed-message
-disable=too-few-public-methods
+disable=too-few-public-methods,locally-disabled,file-ignored
 
 [REPORTS]
 
 # Set the output format. Available formats are text, parseable, colorized, msvs
 # (visual studio) and html. You can also give a reporter class, eg
 # mypackage.mymodule.MyReporterClass.
-output-format=text
+output-format=colorized
 
 # Put messages in a separate file for each module / package specified on the
 # command line instead of printing them on stdout. Reports (if any) will be
