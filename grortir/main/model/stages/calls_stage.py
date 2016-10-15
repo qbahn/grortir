@@ -69,7 +69,7 @@ class CallsStage(AbstractStage):
 
     def could_be_optimized(self):
         """Return answer if it is still possible to optimize that stage."""
-        return self.get_cost() < self.max_calls
+        return self.get_cost() < self.get_maximal_acceptable_cost()
 
     def is_enough_quality(self, value):
         """Return True if value is proper quality."""
@@ -78,6 +78,10 @@ class CallsStage(AbstractStage):
     def get_output_of_stage(self, input_vector, control_params):
         """Return output of stage."""
         return control_params
+
+    def get_maximal_acceptable_cost(self):
+        """Return maximum acceptable cost."""
+        return self.max_calls
 
     def __str__(self):
         return self.name

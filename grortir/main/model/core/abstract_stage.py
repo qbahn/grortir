@@ -59,3 +59,8 @@ class AbstractStage:
     def get_output_of_stage():
         """Result of processing input with current control params."""
         raise NotImplementedError
+
+    @staticmethod
+    def get_maximal_acceptable_cost():
+        """Return maximum acceptable cost."""
+        raise NotImplementedError

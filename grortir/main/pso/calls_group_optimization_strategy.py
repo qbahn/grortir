@@ -19,7 +19,7 @@ class CallsGroupOptimizationStrategy(GroupOptimizationStrategy):
         """
         max_cost = 0
         for stage in self.stages_in_group:
-            max_cost += stage.max_calls
+            max_cost += stage.get_maximal_acceptable_cost()
             if self.expected_quality > stage.maximum_acceptable_quality:
                 self.expected_quality = stage.maximum_acceptable_quality
         self.max_cost = max_cost

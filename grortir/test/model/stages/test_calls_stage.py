@@ -63,7 +63,7 @@ class TestCallsStage(TestCase):
         """Positive case for test could_be_optimized method."""
         tested_object = Mock()
         tested_object.get_cost.return_value = MAX_CALLS - 1
-        tested_object.max_calls = MAX_CALLS
+        tested_object.get_maximal_acceptable_cost.return_value = MAX_CALLS
         result = CallsStage.could_be_optimized(tested_object)
         self.assertTrue(result)
 
@@ -71,7 +71,7 @@ class TestCallsStage(TestCase):
         """Negative case for test could_be_optimized method."""
         tested_object = Mock()
         tested_object.get_cost.return_value = MAX_CALLS + 1
-        tested_object.max_calls = MAX_CALLS
+        tested_object.get_maximal_acceptable_cost.return_value = MAX_CALLS
         result = CallsStage.could_be_optimized(tested_object)
         self.assertFalse(result)
 
@@ -87,3 +87,8 @@ class TestCallsStage(TestCase):
         tested_object = CallsStage('name', MAX_CALLS)
         result = tested_object.get_output_of_stage([], [])
         self.assertEqual([], result)
+
+    def test_get_maximal_acceptable_cost(self):
+        tested_object = CallsStage('name', MAX_CALLS)
+        result = tested_object.get_maximal_acceptable_cost()
+        self.assertEqual(result, MAX_CALLS)

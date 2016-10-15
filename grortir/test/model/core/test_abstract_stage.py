@@ -57,3 +57,8 @@ class TestAbstractStage(TestCase):
         tested_object = AbstractStage()
         with self.assertRaises(NotImplementedError):
             tested_object.get_output_of_stage()
+
+    def test_get_maximal_acceptable_cost(self):
+        tested_object = AbstractStage()
+        with self.assertRaises(NotImplementedError):
+            tested_object.get_maximal_acceptable_cost()
