@@ -133,4 +133,5 @@ $ make upload-test  # dry run upload to a test server, if success upload to real
 $ make upload
 ```
 5. Check success of upload on [Grortir PyPI](https://pypi.python.org/pypi?%3Aaction=pkg_edit&name=Grortir) site and fix if needed.
+6. If everything is ok, merge created branch to master.
 
