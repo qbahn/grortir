@@ -5,7 +5,11 @@ from grortir.main.pso.whole_group_pso import WholeGroupPso
 
 
 class PsoAlgorithm:
-    """Optimize process with different strategies."""
+    """Optimize process with different strategies.
+
+    Attributes:
+        process (AbstractProcess): process
+        """
 
     def __init__(self, process, grouping_strategy, optimization_startegy,
                  number_of_particle=40):
@@ -27,3 +31,11 @@ class PsoAlgorithm:
                 get_group_optimization_strategy(current_stages)
             self.whole_group_pso.optimize(current_stages,
                                           group_optimization_strategy)
+        self._post_processing()
+
+    def _post_processing(self):
+        final_status = OptimizationStatus.success
+        for stage in self.grouping_strategy.ordered_stages:
+            if stage.optimization_status != OptimizationStatus.success:
+                final_status = OptimizationStatus.failed
+        self.process.optimization_status = final_status
