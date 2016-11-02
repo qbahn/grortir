@@ -1,5 +1,7 @@
 networkx
 numpy
+sklearn
+scipy
 enum34
 wheel
 pyenchant

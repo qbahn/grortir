@@ -27,3 +27,11 @@ class PsoAlgorithm:
                 get_group_optimization_strategy(current_stages)
             self.whole_group_pso.optimize(current_stages,
                                           group_optimization_strategy)
+        self._post_processing()
+
+    def _post_processing(self):
+        final_status = OptimizationStatus.success
+        for stage in self.grouping_strategy.ordered_stages:
+            if stage.optimization_status != OptimizationStatus.success:
+                final_status = OptimizationStatus.failed
+        self.process.optimization_status = final_status
