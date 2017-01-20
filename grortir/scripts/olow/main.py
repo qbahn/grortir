@@ -12,14 +12,17 @@ from grortir.main.pso.pso_algorithm import PsoAlgorithm
 
 m1_data0 = genfromtxt('data/M1_data0.csv', delimiter=',')
 
-mlpr1_1 = MLPRegressor(hidden_layer_sizes=(11, 13,), max_iter=100000,
+mlpr1_1 = MLPRegressor(activation='tanh', hidden_layer_sizes=(11, 13,),
+                       max_iter=100000000,
                        solver='lbfgs')
-mlpr1_2 = MLPRegressor(hidden_layer_sizes=(24,), max_iter=100000,
+mlpr1_2 = MLPRegressor(activation='tanh', hidden_layer_sizes=(24,),
+                       max_iter=100000000,
                        solver='lbfgs')
-mlpr1_3 = MLPRegressor(hidden_layer_sizes=(22, 14,), max_iter=100000,
+mlpr1_3 = MLPRegressor(activation='tanh', hidden_layer_sizes=(22, 14,),
+                       max_iter=100000000,
                        solver='lbfgs')
 
-x = m1_data0[:, [0, 2]]
+x = m1_data0[:, [0, 1, 2]]
 
 y1 = m1_data0[:, 3]
 y2 = m1_data0[:, 4]
@@ -33,7 +36,8 @@ y3_ = mlpr1_3.fit(x, y3)
 
 m1_dataTest = genfromtxt('data/M1_dataTest.csv', delimiter=',')
 
-x_pred = m1_dataTest[:, [0, 2]]
+# x_pred = m1_dataTest[7, [0,2]]
+x_pred = m1_dataTest[:, [0, 1, 2]]
 y_pred_1 = mlpr1_1.predict(x_pred)
 y_pred_2 = mlpr1_2.predict(x_pred)
 y_pred_3 = mlpr1_3.predict(x_pred)
@@ -46,6 +50,17 @@ y_real_1 = m1_dataTest[:, 3]
 y_real_2 = m1_dataTest[:, 4]
 y_real_3 = m1_dataTest[:, 5]
 
+
+def calculate_error(predicted, real):
+    return (((((predicted - real) / real) ** 2).sum()) / len(real)) ** 0.5
+
+
+print("Errors: START.")
+print(calculate_error(y_pred_1, y_real_1))
+print(calculate_error(y_pred_2, y_real_2))
+print(calculate_error(y_pred_3, y_real_3))
+print("END.  ")
+
 print(max(abs(y_pred_1 - y_real_1)))
 print(max(abs(y_pred_2 - y_real_2)))
 print(max(abs(y_pred_3 - y_real_3)))
@@ -53,11 +68,14 @@ print(max(abs(y_pred_3 - y_real_3)))
 # generowanie modeli dla etapu 2
 m2_data0 = genfromtxt('data/M2_data0.csv', delimiter=',')
 
-mlpr2_1 = MLPRegressor(hidden_layer_sizes=(27, 9,), max_iter=500000,
+mlpr2_1 = MLPRegressor(activation='tanh', hidden_layer_sizes=(27, 9,),
+                       max_iter=500000,
                        solver='lbfgs', learning_rate='invscaling')
-mlpr2_2 = MLPRegressor(hidden_layer_sizes=(13,), max_iter=500000,
+mlpr2_2 = MLPRegressor(activation='tanh', hidden_layer_sizes=(13,),
+                       max_iter=500000,
                        solver='lbfgs', learning_rate='invscaling')
-mlpr2_3 = MLPRegressor(hidden_layer_sizes=(24, 12,), max_iter=500000,
+mlpr2_3 = MLPRegressor(activation='tanh', hidden_layer_sizes=(24, 12,),
+                       max_iter=500000,
                        solver='lbfgs', learning_rate='invscaling')
 
 x = m2_data0[:, [0, 5]]
@@ -74,7 +92,7 @@ y3_ = mlpr2_3.fit(x, y3)
 
 m2_dataTest = genfromtxt('data/M2_dataTest.csv', delimiter=',')
 
-x_pred = m2_dataTest[:, [0, 5]]
+x_pred = m2_dataTest[:, [0, 1, 2, 3, 4, 5]]
 y_pred_1 = mlpr2_1.predict(x_pred)
 y_pred_2 = mlpr2_2.predict(x_pred)
 y_pred_3 = mlpr2_3.predict(x_pred)
@@ -106,7 +124,7 @@ y1_ = mlpr3_1.fit(x, y1)
 
 m3_dataTest = genfromtxt('data/M3_dataTest.csv', delimiter=',')
 
-x_pred = m3_dataTest[:, [0, 4]]
+x_pred = m3_dataTest[:, [0, 1, 2, 3, 4]]
 y_pred_1 = mlpr3_1.predict(x_pred)
 
 pickle.dump(mlpr3_1, open("model3_1.p", "wb"))
@@ -129,8 +147,7 @@ class AbstractLoadStage(CallsStage):
 
 
 class LeadStage1(AbstractLoadStage):
-    @staticmethod
-    def get_output_of_stage(input_vector, control_params):
+    def get_output_of_stage(self, input_vector, control_params):
         """
 
         Args:
@@ -142,7 +159,7 @@ class LeadStage1(AbstractLoadStage):
         """
         vec = input_vector[0:2] + control_params[0:1]
         res = [mlpr1_1.predict(vec), mlpr1_2.predict(vec)]
-        output = [input_vector[0], input_vector[1], res[0], res[1]]
+        output = [input_vector[0], input_vector[1], res[0][0], res[1][0]]
         return output
 
     def get_quality(self, input_vector=None, control_params=None):
@@ -157,11 +174,10 @@ class LeadStage1(AbstractLoadStage):
         """
         vec = input_vector[0:2] + control_params[0:1]
         res = mlpr1_3.predict(vec)
-        return res
+        return res[0][0]
 
 
 class LeadStage2(AbstractLoadStage):
-    @staticmethod
     def get_output_of_stage(self, input_vector, control_params):
         """
 
@@ -175,17 +191,17 @@ class LeadStage2(AbstractLoadStage):
         """
         vec = input_vector + control_params[0:2]
         res = [mlpr2_2.predict(vec), mlpr2_3.predict(vec)]
-        return res
+        output = [res[0][0], res[1][0]]
+        return output
 
     def get_quality(self, input_vector=None, control_params=None):
         vec = input_vector + control_params[0:2]
         res = mlpr2_1.predict(vec)
-        return res
+        return res[0][0]
 
 
 class LeadStage3(AbstractLoadStage):
-    @staticmethod
-    def get_output_of_stage(input_vector, control_params):
+    def get_output_of_stage(self, input_vector, control_params):
         """
 
         Args:
@@ -197,7 +213,8 @@ class LeadStage3(AbstractLoadStage):
         """
         vec = input_vector[0:2] + control_params[0:3]
         res = [mlpr3_1.predict(vec)]
-        return res
+        output = [res[0][0]]
+        return output
 
     def get_quality(self, input_vector=None, control_params=None):
         """
@@ -211,7 +228,7 @@ class LeadStage3(AbstractLoadStage):
         """
         vec = input_vector[0:2] + control_params[0:3]
         res = mlpr3_1.predict(vec)
-        return res
+        return res[0][0]
 
 
 class LeadProcess(AbstractProcess):
