@@ -5,10 +5,10 @@
 import unittest.mock as mock
 from unittest import TestCase
 
-from grortir.main.model.core.abstract_process import AbstractProcess
-from grortir.main.optimizers.grouped_optimizer import GroupedOptimizer
-from grortir.main.optimizers.grouping_strategy import GroupingStrategy
 from grortir.main.model.core.abstract_stage import AbstractStage
+from grortir.main.model.core.abstract_process import AbstractProcess
+from grortir.main.optimizers.grouping_strategy import GroupingStrategy
+from grortir.main.optimizers.grouped_optimizer import GroupedOptimizer
 from grortir.main.pso.calls_optimization_strategy import \
     CallsOptimizationStrategy
 from grortir.main.pso.pso_algorithm import PsoAlgorithm
@@ -42,21 +42,20 @@ class TestGroupedOptimizer(TestCase):
         optimizer = GroupedOptimizer(TESTED_PROCESS, GROUPING_STRATEGY,
                                      PSO_ALGORITHM)
         optimizer.optimize_process()
-        input_validator = InputValidator(CALLS_REGISTRY)
+        current_calls = GROUPING_STRATEGY.ordered_stages[0].calls_registry
+        input_validator = InputValidator(current_calls)
         is_valid = input_validator.validate_input(GROUPING_STRATEGY,
                                                   TESTED_PROCESS)
         self.assertTrue(is_valid)
 
 
-CALLS_REGISTRY = CallsRegistry()
-
-
 class DeterministicStage(AbstractStage):
-    def __init__(self, name, max_get_output_of_stage_count=10,
+    def __init__(self, calls_registry, name, max_get_output_of_stage_count=10,
                  max_is_enough_quality_count=10,
                  max_could_be_optimized_count=10, max_get_quality_count=10,
                  max_get_cost_count=10):
         super().__init__((0, 0, 0, 0))
+        self.calls_registry = calls_registry
         self.name = name
         self.get_cost_count = 0
         self.get_quality_count = 0
@@ -71,54 +70,56 @@ class DeterministicStage(AbstractStage):
         self.max_could_be_optimized_count = max_could_be_optimized_count
         self.max_is_enough_quality_count = max_is_enough_quality_count
         self.max_get_output_of_stage_count = max_get_output_of_stage_count
-        CALLS_REGISTRY.add_call(self.name, '__init__',
-                                [name, max_get_output_of_stage_count,
-                                 max_is_enough_quality_count,
-                                 max_could_be_optimized_count,
-                                 max_get_quality_count,
-                                 max_get_cost_count], None, 1)
+        self.calls_registry.add_call(self.name, '__init__',
+                                     [name, max_get_output_of_stage_count,
+                                      max_is_enough_quality_count,
+                                      max_could_be_optimized_count,
+                                      max_get_quality_count,
+                                      max_get_cost_count], None, 1)
 
     def get_cost(self):
         self.get_cost_count += 1
-        CALLS_REGISTRY.add_call(self.name, "get_cost", [], self.get_cost_count,
-                                self.get_cost_count)
+        self.calls_registry.add_call(self.name, "get_cost", [],
+                                     self.get_cost_count,
+                                     self.get_cost_count)
         return self.get_cost_count
 
     def get_quality(self, input_vector, control_params=None):
         self.get_quality_count += 1
         result = 0.1 if self.get_quality_count > int(self.name) else 1000
-        CALLS_REGISTRY.add_call(self.name, "get_quality",
-                                [input_vector, control_params], result,
-                                self.get_quality_count)
+        self.calls_registry.add_call(self.name, "get_quality",
+                                     [input_vector, control_params], result,
+                                     self.get_quality_count)
         return result
 
     def could_be_optimized(self):
         self.could_be_optimized_count += 1
-        CALLS_REGISTRY.add_call(self.name, "could_be_optimized", [], True,
-                                self.could_be_optimized_count)
+        self.calls_registry.add_call(self.name, "could_be_optimized", [], True,
+                                     self.could_be_optimized_count)
         return True
 
     def is_enough_quality(self, value):
         self.is_enough_quality_count += 1
         result = value < 1
-        CALLS_REGISTRY.add_call(self.name, "is_enough_quality", [value], result,
-                                self.is_enough_quality_count)
+        self.calls_registry.add_call(self.name, "is_enough_quality", [value],
+                                     result,
+                                     self.is_enough_quality_count)
         return result
 
     def get_output_of_stage(self, input_vector, control_params):
         self.get_output_of_stage_count += 1
         output = [self.get_output_of_stage_count] * len(input_vector)
         output[0] = int(self.name)
-        CALLS_REGISTRY.add_call(self.name, "get_output_of_stage",
-                                [input_vector, control_params], output,
-                                self.get_output_of_stage_count)
+        self.calls_registry.add_call(self.name, "get_output_of_stage",
+                                     [input_vector, control_params], output,
+                                     self.get_output_of_stage_count)
         return output
 
     def get_maximal_acceptable_cost(self):
         self.get_maximal_acceptable_cost_count += 1
-        CALLS_REGISTRY.add_call(self.name, "get_maximal_acceptable_cost",
-                                [], self.maximal_acceptable_cost,
-                                self.get_output_of_stage_count)
+        self.calls_registry.add_call(self.name, "get_maximal_acceptable_cost",
+                                     [], self.maximal_acceptable_cost,
+                                     self.get_output_of_stage_count)
         return self.maximal_acceptable_cost
 
 
@@ -126,10 +127,12 @@ class ExampleProcess(AbstractProcess):
     pass
 
 
+calls_registry_instance = CallsRegistry()
+
 TESTED_PROCESS = ExampleProcess()
 stages = {}
-for i in range(7):
-    stages[i] = DeterministicStage(str(i))
+for i in range(8):
+    stages[i] = DeterministicStage(calls_registry_instance, str(i))
 
 # Our graph:
 #   0
@@ -139,6 +142,8 @@ for i in range(7):
 #   2 4
 #   | |\
 #   3 5 6
+#        \
+#         7
 # All edges directed to down
 # Order of nodes is the same as names
 TESTED_PROCESS.add_edge(stages[0], stages[1])
@@ -148,6 +153,7 @@ TESTED_PROCESS.add_edge(stages[2], stages[3])
 TESTED_PROCESS.add_edge(stages[1], stages[4])
 TESTED_PROCESS.add_edge(stages[4], stages[5])
 TESTED_PROCESS.add_edge(stages[4], stages[6])
+TESTED_PROCESS.add_edge(stages[6], stages[7])
 
 # Groups:
 #   (0)0
@@ -157,11 +163,13 @@ TESTED_PROCESS.add_edge(stages[4], stages[6])
 #   (0)2 4(1)
 #      | | \
 #   (1)3 5(1)6(2)
-
+#             \
+#              7(3)
 GROUPING_STRATEGY = GroupingStrategy(list(stages.values()))
 GROUPING_STRATEGY.define_group((stages[0], stages[1], stages[2]))
 GROUPING_STRATEGY.define_group((stages[3], stages[4], stages[5]))
 GROUPING_STRATEGY.define_group((stages[6],))
+GROUPING_STRATEGY.define_group((stages[7],))
 
 OPTIMIZATION_STARTEGY = CallsOptimizationStrategy()
 
