@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 from grortir.main.model.core.optimization_status import OptimizationStatus
 from grortir.main.model.processes.calls_process import CallsProcess
-from grortir.main.model.stages.calls_stage import CallsStage
+from grortir.main.model.stages.cumulated_calls_stage import CumulatedCallsStage
 from grortir.main.optimizers.grouping_strategy import GroupingStrategy
 from grortir.main.pso.calls_optimization_strategy import \
     CallsOptimizationStrategy
@@ -47,7 +47,7 @@ HOW_MANY_TRIES = 100
 
 
 def create_stages():
-    return [CallsStage(i, MAX_CALLS, INPUT_VECTOR, EXPECTED_QUALITY) for i in
+    return [CumulatedCallsStage(i, MAX_CALLS, INPUT_VECTOR, EXPECTED_QUALITY) for i in
             range(15)]
 
 
