@@ -13,6 +13,9 @@ class CumulatedCallsStage(CallsStage):
         super().__init__(name, max_calls, input_vector,
                          maximum_acceptable_quality)
         self.control_params = [0] * (len(self.input_vector) - 1)
+        dimensions = len(self.control_params)
+        self.lower_bounds = [-1] * dimensions
+        self.upper_bounds = [1] * dimensions
 
     @staticmethod
     def calculate_quality(input_vector, control_params):

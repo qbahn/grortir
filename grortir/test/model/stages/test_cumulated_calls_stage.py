@@ -19,6 +19,8 @@ class TestCumulatedCallsStage(TestCase):
         self.assertEquals(tested_object.name, "Tested obj")
         self.assertEquals(tested_object.max_calls, MAX_CALLS)
         self.assertEquals(tested_object.maximum_acceptable_quality, 0.03)
+        self.assertEquals(tested_object.lower_bounds, [-1, -1])
+        self.assertEquals(tested_object.upper_bounds, [1, 1])
 
     def test_calculate_quality_ex(self):
         """Test case when control are wrong."""
