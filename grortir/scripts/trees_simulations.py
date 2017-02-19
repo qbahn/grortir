@@ -40,7 +40,7 @@ def calculate_probability_of_success(max_calls, number_of_nodes,
 
 
 MAX_CALLS = 1000
-EXPECTED_QUALITY = 0.1
+EXPECTED_QUALITY = 0.001
 INPUT_VECTOR = (0,)
 HOW_MANY_PARTICLES = 40
 HOW_MANY_TRIES = 100
