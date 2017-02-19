@@ -40,7 +40,7 @@ def calculate_probability_of_success(max_calls, number_of_nodes,
 
 
 MAX_CALLS = 1000
-EXPECTED_QUALITY = 0.001
+EXPECTED_QUALITY = 0.1
 INPUT_VECTOR = (0,)
 HOW_MANY_PARTICLES = 40
 HOW_MANY_TRIES = 100
@@ -226,9 +226,9 @@ print(
 print(str([MAX_CALLS, EXPECTED_QUALITY, len(INPUT_VECTOR), HOW_MANY_PARTICLES,
            HOW_MANY_TRIES]))
 #
-print("dfs_success_balanced_count_SIM" + str(dfs_success_balanced_count_SIM))
+print("dfs_success_balanced_count_SIM: " + str(dfs_success_balanced_count_SIM))
 print(
-    "dfs_unbalanced_success_count_SIM" + str(dfs_unbalanced_success_count_SIM))
-print("dfs_balanced_success_count_SEQ" + str(dfs_balanced_success_count_SEQ))
+    "dfs_unbalanced_success_count_SIM: " + str(dfs_unbalanced_success_count_SIM))
+print("dfs_balanced_success_count_SEQ: " + str(dfs_balanced_success_count_SEQ))
 print(
-    "dfs_unbalanced_success_count_SEQ:" + str(dfs_unbalanced_success_count_SEQ))
+    "dfs_unbalanced_success_count_SEQ: " + str(dfs_unbalanced_success_count_SEQ))
