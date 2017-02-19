@@ -222,7 +222,7 @@ for i in range(HOW_MANY_TRIES):
     print("Iteracja:" + str(i))
 
 print(
-    "Max calls, expected_quality, dim, how_many_particles, how_many_tries, NEW_FUNCTION")
+    "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
 print(str([MAX_CALLS, EXPECTED_QUALITY, len(INPUT_VECTOR), HOW_MANY_PARTICLES,
            HOW_MANY_TRIES]))
 #
