@@ -47,20 +47,34 @@ HOW_MANY_TRIES = 100
 
 
 def create_stages():
-    return [CumulatedCallsStage(i, MAX_CALLS, INPUT_VECTOR, EXPECTED_QUALITY) for i in
+    return [CumulatedCallsStage(i, MAX_CALLS, INPUT_VECTOR, EXPECTED_QUALITY)
+            for i in
             range(15)]
 
 
-def create_edges(process, stages):
+def create_edges_balanced(process, stages):
     for i in range(7):
         process.add_edge(stages[i], stages[2 * i + 1])
         process.add_edge(stages[i], stages[2 * i + 2])
 
 
+def create_edges_unbalanced(process, stages):
+    for i in range(3):
+        process.add_edge(stages[i], stages[2 * i + 1])
+        process.add_edge(stages[i], stages[2 * i + 2])
+    process.add_edge(stages[5], stages[7])
+    process.add_edge(stages[5], stages[8])
+    process.add_edge(stages[6], stages[9])
+    process.add_edge(stages[6], stages[10])
+    process.add_edge(stages[9], stages[11])
+    process.add_edge(stages[9], stages[12])
+    process.add_edge(stages[10], stages[13])
+    process.add_edge(stages[10], stages[14])
+
 def create_PSO_algorithm_BFS_SEQ():
     bfs_stages = create_stages()
     bfs_process = CallsProcess()
-    create_edges(bfs_process, bfs_stages)
+    create_edges_balanced(bfs_process, bfs_stages)
     bfs_ordered_stages = bfs_stages
     bfs_grouping_strategy = GroupingStrategy(bfs_ordered_stages)
     for stage in bfs_ordered_stages:
@@ -73,7 +87,7 @@ def create_PSO_algorithm_BFS_SEQ():
 def create_PSO_algorithm_BFS_SIM():
     bfs_stages = create_stages()
     bfs_process = CallsProcess()
-    create_edges(bfs_process, bfs_stages)
+    create_edges_balanced(bfs_process, bfs_stages)
     bfs_ordered_stages = bfs_stages
     bfs_grouping_strategy = GroupingStrategy(bfs_ordered_stages)
     bfs_grouping_strategy.define_group(bfs_ordered_stages)
@@ -88,7 +102,7 @@ def create_PSO_algorithm_BFS_SIM():
 def create_PSO_algorithm_DFS_SEQ():
     dfs_stages = create_stages()
     dfs_process = CallsProcess()
-    create_edges(dfs_process, dfs_stages)
+    create_edges_balanced(dfs_process, dfs_stages)
     dfs_ordered_stages = [
         dfs_stages[0],
         dfs_stages[1],
@@ -117,7 +131,7 @@ def create_PSO_algorithm_DFS_SEQ():
 def create_PSO_algorithm_DFS_SIM():
     dfs_stages = create_stages()
     dfs_process = CallsProcess()
-    create_edges(dfs_process, dfs_stages)
+    create_edges_balanced(dfs_process, dfs_stages)
     dfs_ordered_stages = [
         dfs_stages[0],
         dfs_stages[1],
@@ -172,7 +186,8 @@ for i in range(HOW_MANY_TRIES):
         print("BFS SEQ SUCCESS!")
     print("Iteracja:" + str(i))
 
-print("Max calls, expected_quality, dim, how_many_particles, how_many_tries, NEW_FUNCTION")
+print(
+    "Max calls, expected_quality, dim, how_many_particles, how_many_tries, NEW_FUNCTION")
 print(str([MAX_CALLS, EXPECTED_QUALITY, len(INPUT_VECTOR), HOW_MANY_PARTICLES,
            HOW_MANY_TRIES]))
 #
