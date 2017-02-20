@@ -40,7 +40,7 @@ class VelocityCalculator:
             s_2 = self.c_2 * self._s2(rand_2, particle_best_positions[stage],
                                       control_params[stage])
             velocity = s_0 + s_1 + s_2
-            velocities[stage] = velocity
+            velocities[stage] = velocity.tolist()
         return velocities
 
     @staticmethod
@@ -56,4 +56,4 @@ class VelocityCalculator:
                 control_params))
 
     def _s0(self, current_velocity):
-        return self.w_factor * current_velocity
+        return self.w_factor * np.asarray(current_velocity)

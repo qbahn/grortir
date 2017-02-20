@@ -28,9 +28,11 @@ class PositionUpdater:
     def update_position(self, velocities, control_params):
         """Update positions."""
         for stage in velocities:
-            new_control_params = control_params[stage] + velocities[stage]
+            new_control_params = np.asarray(control_params[stage]) + np.asarray(
+                velocities[stage])
             control_params[stage] = self._fix_coordinates(stage,
-                                                          new_control_params)
+                                                          new_control_params) \
+                .tolist()
         return control_params
 
     @staticmethod
