@@ -1,3 +1,6 @@
+import logging
+
+from grortir.main.logging.logging_configuration import LoggingConfiguration
 from grortir.main.model.core.optimization_status import OptimizationStatus
 from grortir.main.model.processes.calls_process import CallsProcess
 from grortir.main.model.stages.cumulated_calls_stage import CumulatedCallsStage
@@ -6,6 +9,7 @@ from grortir.main.pso.calls_optimization_strategy import \
     CallsOptimizationStrategy
 from grortir.main.pso.pso_algorithm import PsoAlgorithm
 
+LOG = logging.getLogger(__name__)
 
 def create_input_vector_for_cumulated_stages(dimensions):
     length_of_input_vector = (dimensions + 1)
@@ -187,14 +191,14 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
         dfs_pso_balanced_SIM.run()
         if dfs_pso_balanced_SIM.process.optimization_status == OptimizationStatus.success:
             dfs_success_balanced_count_SIM += 1
-            print("DFS balanced SIM SUCCESS!")
+            LOG.info("DFS balanced SIM SUCCESS!")
         dfs_pso_unbalanced_SIM = create_PSO_algorithm_DFS_unbalanced_SIM(
             how_many_stages, max_calls, input_vector, expected_quality,
             how_many_particles)
         dfs_pso_unbalanced_SIM.run()
         if dfs_pso_unbalanced_SIM.process.optimization_status == OptimizationStatus.success:
             dfs_unbalanced_success_count_SIM += 1
-            print("DFS unbalanced SIM SUCCESS!")
+            LOG.info("DFS unbalanced SIM SUCCESS!")
 
         dfs_pso_balanced_SEQ = create_PSO_algorithm_DFS_balanced_SEQ(
             how_many_stages, max_calls, input_vector, expected_quality,
@@ -202,32 +206,33 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
         dfs_pso_balanced_SEQ.run()
         if dfs_pso_balanced_SEQ.process.optimization_status == OptimizationStatus.success:
             dfs_balanced_success_count_SEQ += 1
-            print("DFS balanced SEQ SUCCESS!")
+            LOG.info("DFS balanced SEQ SUCCESS!")
         dfs_pso_unbalanced_SEQ = create_PSO_algorithm_DFS_unbalanced_SEQ(
             how_many_stages, max_calls, input_vector, expected_quality,
             how_many_particles)
         dfs_pso_unbalanced_SEQ.run()
         if dfs_pso_unbalanced_SEQ.process.optimization_status == OptimizationStatus.success:
             dfs_unbalanced_success_count_SEQ += 1
-            print("DFS unbalanced SEQ SUCCESS!")
-        print("Iteracja:" + str(i))
-    print(
+            LOG.info("DFS unbalanced SEQ SUCCESS!")
+        LOG.info("Iteracja:" + str(i))
+    LOG.info(
         "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
-    print(
+    LOG.info(
         str([max_calls, expected_quality, len(input_vector), how_many_particles,
              how_many_tries]))
     #
-    print("dfs_success_balanced_count_SIM: " + str(
+    LOG.info("dfs_success_balanced_count_SIM: " + str(
         dfs_success_balanced_count_SIM))
-    print(
+    LOG.info(
         "dfs_unbalanced_success_count_SIM: " + str(
             dfs_unbalanced_success_count_SIM))
-    print("dfs_balanced_success_count_SEQ: " + str(
+    LOG.info("dfs_balanced_success_count_SEQ: " + str(
         dfs_balanced_success_count_SEQ))
-    print(
+    LOG.info(
         "dfs_unbalanced_success_count_SEQ: " + str(
             dfs_unbalanced_success_count_SEQ))
 
+LoggingConfiguration.init()
 
 MAX_CALLS = 1000
 EXPECTED_QUALITY = 0.001
