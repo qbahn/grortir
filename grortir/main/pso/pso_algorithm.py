@@ -1,8 +1,12 @@
 """Contain PsoAlgorithm."""
 # pylint: disable=redefined-variable-type
+import logging
+
 from grortir.main.model.core.optimization_status import OptimizationStatus
 from grortir.main.pso.process_validator import ProcessValidator
 from grortir.main.pso.whole_group_pso import WholeGroupPso
+
+LOG = logging.getLogger(__name__)
 
 
 class PsoAlgorithm:
@@ -40,3 +44,4 @@ class PsoAlgorithm:
             if stage.optimization_status != OptimizationStatus.success:
                 final_status = OptimizationStatus.failed
         self.process.optimization_status = final_status
+        LOG.info('Final status of process optimization: ' + str(final_status))

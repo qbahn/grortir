@@ -92,3 +92,19 @@ class TestCallsStage(TestCase):
         tested_object = CallsStage('name', MAX_CALLS)
         result = tested_object.get_maximal_acceptable_cost()
         self.assertEqual(result, MAX_CALLS)
+
+    def test___str__(self):
+        tested_object = CallsStage('name', MAX_CALLS)
+        res = str(tested_object)
+        self.assertEqual(res, """{'control_params': [],
+ 'cost': 0,
+ 'final_cost': None,
+ 'final_output': None,
+ 'final_quality': None,
+ 'input_vector': (),
+ 'lower_bounds': [],
+ 'max_calls': 100,
+ 'maximum_acceptable_quality': 0.01,
+ 'name': 'name',
+ 'optimization_status': <OptimizationStatus.not_started: 'Not started'>,
+ 'upper_bounds': []}""")

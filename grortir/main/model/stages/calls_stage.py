@@ -1,4 +1,6 @@
 """Module contains class CallsStage."""
+from pprint import pformat
+
 from grortir.main.model.core.abstract_stage import AbstractStage
 
 
@@ -84,4 +86,4 @@ class CallsStage(AbstractStage):
         return self.max_calls
 
     def __str__(self):
-        return self.name
+        return pformat(self.__dict__)

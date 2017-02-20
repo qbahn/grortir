@@ -2,6 +2,8 @@
 # pylint: disable=line-too-long
 import logging.config
 
+LOG = logging.getLogger(__name__)
+
 
 class LoggingConfiguration:
     """Contains configuration for logging."""
@@ -12,6 +14,7 @@ class LoggingConfiguration:
         Initialize logging.
         """
         logging.config.dictConfig(LoggingConfiguration._get_dict_config())
+        LOG.debug('Logger configured successfully!')
 
     @classmethod
     def _get_dict_config(cls):
