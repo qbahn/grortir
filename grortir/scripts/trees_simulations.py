@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 from grortir.main.model.core.optimization_status import OptimizationStatus
 from grortir.main.model.processes.calls_process import CallsProcess
 from grortir.main.model.stages.cumulated_calls_stage import CumulatedCallsStage
@@ -9,39 +7,14 @@ from grortir.main.pso.calls_optimization_strategy import \
 from grortir.main.pso.pso_algorithm import PsoAlgorithm
 
 
-def draw_from_dict(dict_with_results, name="Undefined"):
-    x = []
-    y = []
-    for key, value in dict_with_results.items():
-        x.append(key)
-        y.append(value)
-    plt.plot(x, y, 'ro')
-    plt.savefig(name)
-    plt.show()
-
-
-def calculate_probability_of_success(max_calls, number_of_nodes,
-                                     number_of_tries, method_type):
-    results = {}
-    for how_many_nodes in number_of_nodes:
-        how_many_success = 0.0
-        how_many_failed = 0.0
-        probability = -1
-        for nr_proby in range(number_of_tries):
-            optimized_process = optimization(max_calls, how_many_nodes,
-                                             method_type)
-            if optimized_process.optimization_status == OptimizationStatus.success:
-                how_many_success += 1
-            else:
-                how_many_failed += 1
-            probability = how_many_success / number_of_tries
-        results[how_many_nodes] = probability
-    return results
+def create_input_vector_for_cumulated_stages(dimensions):
+    length_of_input_vector = (dimensions + 1)
+    return (0,) * length_of_input_vector
 
 
 MAX_CALLS = 1000
 EXPECTED_QUALITY = 0.001
-INPUT_VECTOR = (0,)
+INPUT_VECTOR = create_input_vector_for_cumulated_stages(1)
 HOW_MANY_PARTICLES = 40
 HOW_MANY_TRIES = 100
 
@@ -191,44 +164,51 @@ def get_dfs_unbalanced_ordered_stages(stages):
     ]
 
 
-# DFS part
-dfs_results = []
-dfs_success_balanced_count_SIM = 0
-dfs_unbalanced_success_count_SIM = 0
-dfs_balanced_success_count_SEQ = 0
-dfs_unbalanced_success_count_SEQ = 0
-for i in range(HOW_MANY_TRIES):
-    dfs_pso_balanced_SIM = create_PSO_algorithm_DFS_balanced_SIM()
-    dfs_pso_balanced_SIM.run()
-    if dfs_pso_balanced_SIM.process.optimization_status == OptimizationStatus.success:
-        dfs_success_balanced_count_SIM += 1
-        print("DFS balanced SIM SUCCESS!")
-    dfs_pso_unbalanced_SIM = create_PSO_algorithm_DFS_unbalanced_SIM()
-    dfs_pso_unbalanced_SIM.run()
-    if dfs_pso_unbalanced_SIM.process.optimization_status == OptimizationStatus.success:
-        dfs_unbalanced_success_count_SIM += 1
-        print("DFS unbalanced SIM SUCCESS!")
+def run_all(max_calls, expected_quality, how_many_tries, how_many_particles):
+    dfs_success_balanced_count_SIM = 0
+    dfs_unbalanced_success_count_SIM = 0
+    dfs_balanced_success_count_SEQ = 0
+    dfs_unbalanced_success_count_SEQ = 0
+    for i in range(how_many_tries):
+        dfs_pso_balanced_SIM = create_PSO_algorithm_DFS_balanced_SIM()
+        dfs_pso_balanced_SIM.run()
+        if dfs_pso_balanced_SIM.process.optimization_status == OptimizationStatus.success:
+            dfs_success_balanced_count_SIM += 1
+            print("DFS balanced SIM SUCCESS!")
+        dfs_pso_unbalanced_SIM = create_PSO_algorithm_DFS_unbalanced_SIM()
+        dfs_pso_unbalanced_SIM.run()
+        if dfs_pso_unbalanced_SIM.process.optimization_status == OptimizationStatus.success:
+            dfs_unbalanced_success_count_SIM += 1
+            print("DFS unbalanced SIM SUCCESS!")
 
-    dfs_pso_balanced_SEQ = create_PSO_algorithm_DFS_balanced_SEQ()
-    dfs_pso_balanced_SEQ.run()
-    if dfs_pso_balanced_SEQ.process.optimization_status == OptimizationStatus.success:
-        dfs_balanced_success_count_SEQ += 1
-        print("DFS balanced SEQ SUCCESS!")
-    dfs_pso_unbalanced_SEQ = create_PSO_algorithm_DFS_unbalanced_SEQ()
-    dfs_pso_unbalanced_SEQ.run()
-    if dfs_pso_unbalanced_SEQ.process.optimization_status == OptimizationStatus.success:
-        dfs_unbalanced_success_count_SEQ += 1
-        print("DFS unbalanced SEQ SUCCESS!")
-    print("Iteracja:" + str(i))
+        dfs_pso_balanced_SEQ = create_PSO_algorithm_DFS_balanced_SEQ()
+        dfs_pso_balanced_SEQ.run()
+        if dfs_pso_balanced_SEQ.process.optimization_status == OptimizationStatus.success:
+            dfs_balanced_success_count_SEQ += 1
+            print("DFS balanced SEQ SUCCESS!")
+        dfs_pso_unbalanced_SEQ = create_PSO_algorithm_DFS_unbalanced_SEQ()
+        dfs_pso_unbalanced_SEQ.run()
+        if dfs_pso_unbalanced_SEQ.process.optimization_status == OptimizationStatus.success:
+            dfs_unbalanced_success_count_SEQ += 1
+            print("DFS unbalanced SEQ SUCCESS!")
+        print("Iteracja:" + str(i))
+    print(
+        "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
+    print(
+        str([max_calls, expected_quality, len(INPUT_VECTOR), how_many_particles,
+             how_many_tries]))
+    #
+    print("dfs_success_balanced_count_SIM: " + str(
+        dfs_success_balanced_count_SIM))
+    print(
+        "dfs_unbalanced_success_count_SIM: " + str(
+            dfs_unbalanced_success_count_SIM))
+    print("dfs_balanced_success_count_SEQ: " + str(
+        dfs_balanced_success_count_SEQ))
+    print(
+        "dfs_unbalanced_success_count_SEQ: " + str(
+            dfs_unbalanced_success_count_SEQ))
 
-print(
-    "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
-print(str([MAX_CALLS, EXPECTED_QUALITY, len(INPUT_VECTOR), HOW_MANY_PARTICLES,
-           HOW_MANY_TRIES]))
-#
-print("dfs_success_balanced_count_SIM: " + str(dfs_success_balanced_count_SIM))
-print(
-    "dfs_unbalanced_success_count_SIM: " + str(dfs_unbalanced_success_count_SIM))
-print("dfs_balanced_success_count_SEQ: " + str(dfs_balanced_success_count_SEQ))
-print(
-    "dfs_unbalanced_success_count_SEQ: " + str(dfs_unbalanced_success_count_SEQ))
+
+run_all(MAX_CALLS, EXPECTED_QUALITY, HOW_MANY_TRIES, HOW_MANY_PARTICLES,
+        INPUT_VECTOR)
