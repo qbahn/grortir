@@ -1,4 +1,3 @@
-matplotlib
 networkx
 numpy
 enum34
