@@ -218,7 +218,7 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
     LOG.info(
         "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
     LOG.info(
-        str([max_calls, expected_quality, len(input_vector), how_many_particles,
+        str([max_calls, expected_quality, dimensions, how_many_particles,
              how_many_tries]))
     #
     LOG.info("dfs_success_balanced_count_SIM: " + str(
