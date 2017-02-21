@@ -1,3 +1,4 @@
 graphviz
 pandoc
 enchant
+libfreetype6-dev
