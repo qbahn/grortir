@@ -1,10 +1,10 @@
 """Represents optimization strategy for PSO."""
-from grortir.main.pso.calls_group_optimization_strategy import \
-    CallsGroupOptimizationStrategy
+from grortir.main.pso.credit_calls_group_optimization_strategy import \
+    CreditCallsGroupOptimizationStrategy
 from grortir.main.pso.optimization_strategy import OptimizationStrategy
 
 
-class CallsOptimizationStrategy(OptimizationStrategy):
+class CreditCallsOptimizationStrategy(OptimizationStrategy):
     """Represents optimization strategy Calls stages for PSO."""
 
     def get_group_optimization_strategy(self, stages_in_group, process):
@@ -18,4 +18,4 @@ class CallsOptimizationStrategy(OptimizationStrategy):
         Returns:
             CallsGroupOptimizationStrategy: strategy for group optimization.
         """
-        return CallsGroupOptimizationStrategy(stages_in_group)
+        return CreditCallsGroupOptimizationStrategy(stages_in_group, process)

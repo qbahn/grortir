@@ -33,7 +33,7 @@ class PsoAlgorithm:
             current_stages = self.grouping_strategy.get_items_from_group(
                 current_group_number)
             group_optimization_strategy = self.optimization_strategy. \
-                get_group_optimization_strategy(current_stages)
+                get_group_optimization_strategy(current_stages, self.process)
             self.whole_group_pso.optimize(current_stages,
                                           group_optimization_strategy)
         self._post_processing()
