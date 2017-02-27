@@ -1,5 +1,7 @@
+# pylint: disable=redefined-variable-type
 import numpy as np
 
+from grortir.main.model.core.optimization_status import OptimizationStatus
 from grortir.main.pso.group_optimization_strategy import \
     GroupOptimizationStrategy
 
@@ -42,7 +44,8 @@ class CreditCallsGroupOptimizationStrategy(GroupOptimizationStrategy):
 
     def should_continue(self, best_particle):
         """
-
+        Return true if optimization should be continued for Calls Process with
+        credits.
         Args:
             best_particle Particle: best particle in swarm.
 
@@ -52,6 +55,19 @@ class CreditCallsGroupOptimizationStrategy(GroupOptimizationStrategy):
         """
         return self._is_safe_cost() and not self._is_enough_quality(
             best_particle)
+
+    def finalize(self, best_particle):
+        """
+        Set proper status after finished group optimization.
+        Args:
+            best_particle (Particle): best particle in Swarm
+        """
+        optimizatin_status = OptimizationStatus.failed
+        if self._is_safe_cost() and self._is_enough_quality(
+                best_particle):
+            optimizatin_status = OptimizationStatus.success
+        for stage in self.stages_in_group:
+            stage.optimization_status = optimizatin_status
 
     def _is_safe_cost(self):
         return (

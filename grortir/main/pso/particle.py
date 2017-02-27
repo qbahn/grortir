@@ -50,7 +50,6 @@ class Particle(object):
         """Update values in swarm."""
         self.update_input_vectors()
         self.calculate_current_quality()
-        self._update_stages_status()
         self._update_best_position()
 
     def _update_best_position(self):
@@ -97,10 +96,3 @@ class Particle(object):
             best_particle.best_positions,
             self.current_control_params)
         self.current_velocities = velocity
-
-    def _update_stages_status(self):
-        for stage in self.stages:
-            if stage.is_enough_quality(self.current_quality[stage]):
-                stage.optimization_status = OptimizationStatus.success
-            if not stage.could_be_optimized():
-                stage.optimization_status = OptimizationStatus.failed

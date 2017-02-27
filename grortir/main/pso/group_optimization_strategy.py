@@ -26,3 +26,16 @@ class GroupOptimizationStrategy:
             NotImplementedError: if not implemented.
         '"""
         raise NotImplementedError
+
+    @staticmethod
+    def finalize(best_particle):
+        """
+        Strategic method which must set correct status for all stages.
+
+        Args:
+            best_particle (Particle): best particle in swarm
+
+        Raises:
+            NotImplementedError: if not implemented.
+
+        """

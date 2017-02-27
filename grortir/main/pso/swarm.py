@@ -52,8 +52,13 @@ class Swarm(object):
 
     def post_processing(self):
         """Method which should be done after all iterations."""
-        best_control_params = self.best_particle.best_positions
         # calculate output:
+        if self.best_particle_quality == np.inf:
+            self._post_process_not_run_stages()
+        else:
+            self._post_process_run_stages(self.best_particle.best_positions)
+
+    def _post_process_run_stages(self, best_control_params):
         for stage in self.stages:
             current_output = stage.get_output_of_stage(
                 stage.input_vector, best_control_params[stage])
@@ -64,4 +69,15 @@ class Swarm(object):
             stage.final_cost = stage.get_cost()
             stage.final_quality = stage.get_quality(
                 stage.input_vector, best_control_params[stage])
+            LOG.debug('Final stage status: ' + str(stage))
+
+    def _post_process_not_run_stages(self):
+        for stage in self.stages:
+            successors = self.process.successors(stage)
+            for successor in successors:
+                successor.input_vector = None
+            stage.final_output = None
+            stage.final_cost = None
+            stage.final_quality = None
+            LOG.debug('Optimization for this stage was not triggered.')
             LOG.debug('Final stage status: ' + str(stage))
