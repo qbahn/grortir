@@ -7,6 +7,8 @@ from grortir.main.model.stages.cumulated_calls_stage import CumulatedCallsStage
 from grortir.main.optimizers.grouping_strategy import GroupingStrategy
 from grortir.main.pso.calls_optimization_strategy import \
     CallsOptimizationStrategy
+from grortir.main.pso.credit_calls_optimization_strategy import \
+    CreditCallsOptimizationStrategy
 from grortir.main.pso.pso_algorithm import PsoAlgorithm
 
 LOG = logging.getLogger(__name__)
@@ -88,6 +90,21 @@ def create_PSO_algorithm_DFS_balanced_SEQ(how_many_stages, max_calls,
     return PsoAlgorithm(dfs_process, dfs_grouping_strategy,
                         dfs_optimization_strategy, how_many_particles)
 
+def create_PSO_algorithm_DFS_CREDIT_balanced_SEQ(how_many_stages, max_calls,
+                                          input_vector, expected_quality,
+                                          how_many_particles):
+    dfs_stages = create_stages(how_many_stages, max_calls, input_vector,
+                               expected_quality)
+    dfs_process = CallsProcess()
+    create_edges_balanced(dfs_process, dfs_stages)
+    dfs_ordered_stages = get_dfs_balanced_ordered_stages(dfs_stages)
+    dfs_grouping_strategy = GroupingStrategy(dfs_ordered_stages)
+    for stage in dfs_ordered_stages:
+        dfs_grouping_strategy.define_group([stage])
+    dfs_optimization_strategy = CreditCallsOptimizationStrategy()
+    return PsoAlgorithm(dfs_process, dfs_grouping_strategy,
+                        dfs_optimization_strategy, how_many_particles)
+
 
 def create_PSO_algorithm_DFS_unbalanced_SEQ(how_many_stages, max_calls,
                                             input_vector, expected_quality,
@@ -101,6 +118,21 @@ def create_PSO_algorithm_DFS_unbalanced_SEQ(how_many_stages, max_calls,
     for stage in dfs_ordered_stages:
         dfs_grouping_strategy.define_group([stage])
     dfs_optimization_strategy = CallsOptimizationStrategy()
+    return PsoAlgorithm(dfs_process, dfs_grouping_strategy,
+                        dfs_optimization_strategy, how_many_particles)
+
+def create_PSO_algorithm_DFS_CREDIT_unbalanced_SEQ(how_many_stages, max_calls,
+                                            input_vector, expected_quality,
+                                            how_many_particles):
+    dfs_stages = create_stages(how_many_stages, max_calls, input_vector,
+                               expected_quality)
+    dfs_process = CallsProcess()
+    create_edges_unbalanced(dfs_process, dfs_stages)
+    dfs_ordered_stages = get_dfs_unbalanced_ordered_stages(dfs_stages)
+    dfs_grouping_strategy = GroupingStrategy(dfs_ordered_stages)
+    for stage in dfs_ordered_stages:
+        dfs_grouping_strategy.define_group([stage])
+    dfs_optimization_strategy = CreditCallsOptimizationStrategy()
     return PsoAlgorithm(dfs_process, dfs_grouping_strategy,
                         dfs_optimization_strategy, how_many_particles)
 
@@ -182,6 +214,8 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
     dfs_unbalanced_success_count_SIM = 0
     dfs_balanced_success_count_SEQ = 0
     dfs_unbalanced_success_count_SEQ = 0
+    dfs_balanced_success_count_SEQ_CREDIT = 0
+    dfs_unbalanced_success_count_SEQ_CREDIT = 0
     how_many_stages = 15
     input_vector = create_input_vector_for_cumulated_stages(dimensions)
     for i in range(how_many_tries):
@@ -192,6 +226,7 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
         if dfs_pso_balanced_SIM.process.optimization_status == OptimizationStatus.success:
             dfs_success_balanced_count_SIM += 1
             LOG.info("DFS balanced SIM SUCCESS!")
+
         dfs_pso_unbalanced_SIM = create_PSO_algorithm_DFS_unbalanced_SIM(
             how_many_stages, max_calls, input_vector, expected_quality,
             how_many_particles)
@@ -207,13 +242,31 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
         if dfs_pso_balanced_SEQ.process.optimization_status == OptimizationStatus.success:
             dfs_balanced_success_count_SEQ += 1
             LOG.info("DFS balanced SEQ SUCCESS!")
-        dfs_pso_unbalanced_SEQ = create_PSO_algorithm_DFS_unbalanced_SEQ(
+
+        dfs_pso_balanced_SEQ_CREDIT = create_PSO_algorithm_DFS_balanced_SEQ(
+            how_many_stages, max_calls, input_vector, expected_quality,
+            how_many_particles)
+        dfs_pso_balanced_SEQ_CREDIT.run()
+        if dfs_pso_balanced_SEQ_CREDIT.process.optimization_status == OptimizationStatus.success:
+            dfs_balanced_success_count_SEQ_CREDIT += 1
+            LOG.info("DFS balanced SEQ with Credit SUCCESS!")
+
+        dfs_pso_unbalanced_SEQ = create_PSO_algorithm_DFS_CREDIT_unbalanced_SEQ(
             how_many_stages, max_calls, input_vector, expected_quality,
             how_many_particles)
         dfs_pso_unbalanced_SEQ.run()
         if dfs_pso_unbalanced_SEQ.process.optimization_status == OptimizationStatus.success:
             dfs_unbalanced_success_count_SEQ += 1
             LOG.info("DFS unbalanced SEQ SUCCESS!")
+
+        dfs_pso_unbalanced_SEQ_CREDIT = create_PSO_algorithm_DFS_CREDIT_balanced_SEQ(
+            how_many_stages, max_calls, input_vector, expected_quality,
+            how_many_particles)
+        dfs_pso_unbalanced_SEQ_CREDIT.run()
+        if dfs_pso_unbalanced_SEQ_CREDIT.process.optimization_status == OptimizationStatus.success:
+            dfs_unbalanced_success_count_SEQ_CREDIT += 1
+            LOG.info("DFS unbalanced SEQ with Credit SUCCESS!")
+
         LOG.info("Iteracja:" + str(i))
     LOG.info(
         "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
@@ -231,6 +284,12 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
     LOG.info(
         "dfs_unbalanced_success_count_SEQ: " + str(
             dfs_unbalanced_success_count_SEQ))
+    LOG.info(
+        "dfs_balanced_success_count_SEQ_CREDIT: " + str(
+            dfs_balanced_success_count_SEQ_CREDIT))
+    LOG.info(
+        "dfs_unbalanced_success_count_SEQ_CREDIT: " + str(
+            dfs_unbalanced_success_count_SEQ_CREDIT))
 
 LoggingConfiguration.init()
 
