@@ -268,15 +268,17 @@ LoggingConfiguration.init()
 
 LOG_RESULTS = logging.getLogger('results_logger')
 
+
+## Running parameters:
 MAX_CALLS = 1000
 EXPECTED_QUALITY = 0.001
 HOW_MANY_PARTICLES = 40
 HOW_MANY_TRIES = 100
-DIMENSIONS = [5]
+DIMENSIONS = [8]
 ALGORITHMS_TO_RUN = [
-    PSO_algorithm_DFS_balanced_SEQ,
+    # PSO_algorithm_DFS_balanced_SEQ,
     PSO_algorithm_DFS_CREDIT_balanced_SEQ,
-    PSO_algorithm_DFS_unbalanced_SEQ,
+    # PSO_algorithm_DFS_unbalanced_SEQ,
     PSO_algorithm_DFS_CREDIT_unbalanced_SEQ
 ]
 
