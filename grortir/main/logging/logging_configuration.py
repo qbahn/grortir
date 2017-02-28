@@ -37,11 +37,22 @@ class LoggingConfiguration:
                     'formatter': 'standard',
                     'class': 'logging.handlers.RotatingFileHandler',
                     'filename': 'grortir.log'
+                },
+                'file_result': {
+                    'level': 'INFO',
+                    'formatter': 'standard',
+                    'class': 'logging.handlers.RotatingFileHandler',
+                    'filename': 'grortir-results.log'
                 }
             },
             'loggers': {
                 '': {
                     'handlers': ['default', 'file'],
+                    'level': 'DEBUG',
+                    'propagate': True
+                },
+                'results_logger': {
+                    'handlers': ['file_result'],
                     'level': 'DEBUG',
                     'propagate': True
                 }

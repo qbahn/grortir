@@ -252,19 +252,21 @@ def run_all(dimensions, max_calls, expected_quality, how_many_tries,
 
             LOG.info("Iteracja:" + str(i))
 
-    LOG.info("***SUMMARY INFO: ***")
-    LOG.info(
+    LOG_RESULTS.info("***SUMMARY INFO: ***")
+    LOG_RESULTS.info(
         "Max calls, expected_quality, dim, how_many_particles, how_many_tries, X^2")
-    LOG.info(
+    LOG_RESULTS.info(
         str([max_calls, expected_quality, dimensions, how_many_particles,
              how_many_tries]))
 
     for algorithm in algorithmsToRun:
-        LOG.info(
+        LOG_RESULTS.info(
             algorithm.__name__ + ": " + str(success_count[algorithm.__name__]))
 
 
 LoggingConfiguration.init()
+
+LOG_RESULTS = logging.getLogger('results_logger')
 
 MAX_CALLS = 1000
 EXPECTED_QUALITY = 0.001
@@ -272,8 +274,8 @@ HOW_MANY_PARTICLES = 40
 HOW_MANY_TRIES = 100
 DIMENSIONS = [5]
 ALGORITHMS_TO_RUN = [
-    # PSO_algorithm_DFS_balanced_SEQ,
-    # PSO_algorithm_DFS_CREDIT_balanced_SEQ,
+    PSO_algorithm_DFS_balanced_SEQ,
+    PSO_algorithm_DFS_CREDIT_balanced_SEQ,
     PSO_algorithm_DFS_unbalanced_SEQ,
     PSO_algorithm_DFS_CREDIT_unbalanced_SEQ
 ]

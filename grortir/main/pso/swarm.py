@@ -1,11 +1,8 @@
 """Represents swarm."""
-import logging
 
 import numpy as np
 
 from grortir.main.pso.particle import Particle
-
-LOG = logging.getLogger(__name__)
 
 
 class Swarm(object):
@@ -19,11 +16,9 @@ class Swarm(object):
                           range(number_of_particles)]
         self.best_particle_quality = np.inf
         self.best_particle = self.particles[0]
-        LOG.debug('Swarm created.')
 
     def initialize(self):
         """Initialize all particles in swarm."""
-        LOG.debug('Initialize swarm.')
         for particle in self.particles:
             particle.initialize()
 
@@ -39,12 +34,8 @@ class Swarm(object):
     def _update_best_particle(self):
         for particle in self.particles:
             if particle.best_quality < self.best_particle_quality:
-                LOG.debug('Update best particle.')
                 self.best_particle = particle
                 self.best_particle_quality = particle.best_quality
-                LOG.debug('Current best quality is: ' + str(
-                    self.best_particle_quality))
-        LOG.debug('The best particle is: ' + str(self.best_particle.number))
 
     def _update_velocieties(self):
         for particle in self.particles:
@@ -69,7 +60,6 @@ class Swarm(object):
             stage.final_cost = stage.get_cost()
             stage.final_quality = stage.get_quality(
                 stage.input_vector, best_control_params[stage])
-            LOG.debug('Final stage status: ' + str(stage))
 
     def _post_process_not_run_stages(self):
         for stage in self.stages:
@@ -79,5 +69,3 @@ class Swarm(object):
             stage.final_output = None
             stage.final_cost = None
             stage.final_quality = None
-            LOG.debug('Optimization for this stage was not triggered.')
-            LOG.debug('Final stage status: ' + str(stage))
