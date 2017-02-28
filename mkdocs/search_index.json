@@ -1,0 +1,224 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "grortir\n\n\nApplication for supporting optimization of production process.",
+            "title": "Home"
+        },
+        {
+            "location": "/#grortir",
+            "text": "Application for supporting optimization of production process.",
+            "title": "grortir"
+        },
+        {
+            "location": "/gettingStarted/",
+            "text": "Getting Started\n\n\nRequirements\n\n\n\n\nPython 3.3+\n\n\n\n\nInstallation\n\n\nGrortir can be installed with pip:\n\n\n$ pip install grortir\n\n\n\n\nor directly from the source code:\n\n\n$ git clone https://github.com/qbahn/grortir.git\n$ cd grortir\n$ python setup.py install\n\n\n\n\nBasic Usage\n\n\nAfter installation, the package can imported:\n\n\n$ python\n>>> import grortir\n>>> grortir.__version__\n\n\n\n\nDocumentation\n\n\nRead the full documentation:\n\n\nhttp://qbahn.github.io/grortir\n\n\nFor contributors\n\n\nCheck file:\n\ndocs/about/contributing.md",
+            "title": "Getting Started"
+        },
+        {
+            "location": "/gettingStarted/#getting-started",
+            "text": "",
+            "title": "Getting Started"
+        },
+        {
+            "location": "/gettingStarted/#requirements",
+            "text": "Python 3.3+",
+            "title": "Requirements"
+        },
+        {
+            "location": "/gettingStarted/#installation",
+            "text": "Grortir can be installed with pip:  $ pip install grortir  or directly from the source code:  $ git clone https://github.com/qbahn/grortir.git\n$ cd grortir\n$ python setup.py install",
+            "title": "Installation"
+        },
+        {
+            "location": "/gettingStarted/#basic-usage",
+            "text": "After installation, the package can imported:  $ python\n>>> import grortir\n>>> grortir.__version__",
+            "title": "Basic Usage"
+        },
+        {
+            "location": "/gettingStarted/#documentation",
+            "text": "Read the full documentation:",
+            "title": "Documentation"
+        },
+        {
+            "location": "/gettingStarted/#httpqbahngithubiogrortir",
+            "text": "",
+            "title": "http://qbahn.github.io/grortir"
+        },
+        {
+            "location": "/gettingStarted/#for-contributors",
+            "text": "Check file: docs/about/contributing.md",
+            "title": "For contributors"
+        },
+        {
+            "location": "/code/classes/",
+            "text": "Classes\n\n\nDownload class diagram",
+            "title": "Classes"
+        },
+        {
+            "location": "/code/classes/#classes",
+            "text": "",
+            "title": "Classes"
+        },
+        {
+            "location": "/code/classes/#download-class-diagram",
+            "text": "",
+            "title": "Download class diagram"
+        },
+        {
+            "location": "/code/packages/",
+            "text": "Packages\n\n\nDownload packages diagram",
+            "title": "Packages"
+        },
+        {
+            "location": "/code/packages/#packages",
+            "text": "",
+            "title": "Packages"
+        },
+        {
+            "location": "/code/packages/#download-packages-diagram",
+            "text": "",
+            "title": "Download packages diagram"
+        },
+        {
+            "location": "/code/apidocs/",
+            "text": "ApiDocs\n\n\nApiDocs for current master branch you can find here:\n\n\nhttp://qbahn.github.io/grortir/apidocs/grortir/\n\n\nIf you need apiDocs for your version you can create it by typing:\n\n\nmake apidocs\n\n\n\n\nin root directory of Grortir (this dir which contains Makefile).",
+            "title": "ApiDocs"
+        },
+        {
+            "location": "/code/apidocs/#apidocs",
+            "text": "ApiDocs for current master branch you can find here:",
+            "title": "ApiDocs"
+        },
+        {
+            "location": "/code/apidocs/#httpqbahngithubiogrortirapidocsgrortir",
+            "text": "If you need apiDocs for your version you can create it by typing:  make apidocs  in root directory of Grortir (this dir which contains Makefile).",
+            "title": "http://qbahn.github.io/grortir/apidocs/grortir/"
+        },
+        {
+            "location": "/about/CHANGES/",
+            "text": "Revision History\n\n\n0.1.8 (2016/10/15)\n\n\nImplement grouping optimizer (SIM and SEQ method available)\nImpementing full extensible PSO Algorithm\n\n\n\n0.1.7 (2016/05/17)\n\n\nImplement Calls Stage.\nUpdate pylint settings.\nAdd pyswarm code.\nImplement optimization of single stage.\nImplement optimizer (Class for optimize whole process sequentially.)\n\n\n\n0.1.6 (2016/03/26)\n\n\nFixing deployment configuration.\n\n\n\n0.1.1 (2016/03/26)\n\n\nImplement abstract interfaces.\nCode cleaned.\nImprove CI process.\nAdd Documentation.\n\n\n\n0.1.0 (2016/03/06)\n\n\nCreating application prototype - configure CI process",
+            "title": "Release Notes"
+        },
+        {
+            "location": "/about/CHANGES/#revision-history",
+            "text": "",
+            "title": "Revision History"
+        },
+        {
+            "location": "/about/CHANGES/#018-20161015",
+            "text": "Implement grouping optimizer (SIM and SEQ method available)\nImpementing full extensible PSO Algorithm",
+            "title": "0.1.8 (2016/10/15)"
+        },
+        {
+            "location": "/about/CHANGES/#017-20160517",
+            "text": "Implement Calls Stage.\nUpdate pylint settings.\nAdd pyswarm code.\nImplement optimization of single stage.\nImplement optimizer (Class for optimize whole process sequentially.)",
+            "title": "0.1.7 (2016/05/17)"
+        },
+        {
+            "location": "/about/CHANGES/#016-20160326",
+            "text": "Fixing deployment configuration.",
+            "title": "0.1.6 (2016/03/26)"
+        },
+        {
+            "location": "/about/CHANGES/#011-20160326",
+            "text": "Implement abstract interfaces.\nCode cleaned.\nImprove CI process.\nAdd Documentation.",
+            "title": "0.1.1 (2016/03/26)"
+        },
+        {
+            "location": "/about/CHANGES/#010-20160306",
+            "text": "Creating application prototype - configure CI process",
+            "title": "0.1.0 (2016/03/06)"
+        },
+        {
+            "location": "/about/contributing/",
+            "text": "For Contributors\n\n\nSetup\n\n\nRequirements\n\n\n\n\nMake:\n\n\nWindows: http://cygwin.com/install.html\n\n\nMac: https://developer.apple.com/xcode\n\n\nLinux: http://www.gnu.org/software/make (likely already installed)\n\n\n\n\n\n\nPandoc: http://johnmacfarlane.net/pandoc/installing.html\n\n\nGraphviz: http://www.graphviz.org/Download.php\nUp-to-date requirements are listed in file \n\nrequired-system-packages.txt\n\n\n\n\nInstallation\n\n\nCreate a virtual environment:\n\n\n$ make env\n\n\n\n\nSetup with Docker\n\n\nIf you have any problems with creating your environment etc. You can use Docker.\nDocker will provide for you proper environment.\n\n\nTo create proper docker image type:\n\n\n$ docker build --tag=grortir:completeEnvironment --no-cache $PATH_TO_SOURCE_DIR\n\n\n\n\nIn the end, at one of the latest lines you should see message:\n\n\ntouch env/.all  # flag to indicate all setup steps were successful\n\n\n\n\nAfter that, you can run your docker image and start using already created environment.\n\n\ndocker run -i -t --name dockerGrortir -v $PATH_TO_SOURCE_DIR:/src/usr/currentGrortir  grortir:completeEnvironment /bin/bash\n\n\n\n\nIt's recommended to use absolute path in \n$PATH_TO_SOURCE_DIR\n.\nIn result you will be moved to new bash which exist in your new created docker instance.\nNow you can go to your directory:\n\n\ncd /src/usr/currentGrortir\n\n\n\n\nand type 'make env' or 'make ci'. \nAs you can see your environment is properly configured.\n\n\nDevelopment Tasks\n\n\nCare about code quality\n\n\nFollow Python, OOP and other good conventions.\n\n\nFollow those conventions:\n\n\n\n\nPEP0008\n\n\nPEP0257\n\n\nGoogle Python Style Guide\n\n\n\n\nDocstrings\n\n\nCreate meaningful dosctrings using \nGoogle Docstring Format.\n\nAdd types in docstrings.\n\n\nTesting\n\n\nManually run the tests:\n\n\n$ make test\n$ make tests  # includes integration tests\n\n\n\n\nor keep them running on change:\n\n\n$ make watch\n\n\n\n\n\n\nIn order to have OS X notifications, \nbrew install terminal-notifier\n.\n\n\n\n\nDocumentation\n\n\nBuild the documentation:\n\n\n$ make doc\n\n\n\n\nStatic Analysis\n\n\nRun linters and static analyzers:\n\n\n$ make pep8\n$ make pep257\n$ make pylint\n$ make check  # includes all checks\n\n\n\n\nCommiting to master\n\n\n\n\nCheck that code pass all CI tests on your machine \n\n\nCreate Pull request and recheck that all CI tests are green.\n\n\nIf owner of repo approve your changes then merge to master.\n\n\n\n\nPull Requests\n\n\n\n\nEach commit in PR should represent one independent working functionality.\n\n\nAfter merging your PR to master remove your branch.\n\n\n\n\nContinuous Integration\n\n\nThe CI server will report overall build status:\n\n\n$ make ci\n\n\n\n\nRelease Tasks\n\n\nRelease to PyPI:\n\n\n\n\nUpdate version in file \ngrortir/__init__.py\n to \nyour.version\n\n\nCheck and update \nCHANGES.md\n file.\n\n\nCommit changes in branch \nrelease/your.version\n\n\nUpload package:\n\n\n\n\n$ make upload-test  # dry run upload to a test server, if success upload to real pypi\n$ make upload\n\n\n\n\n\n\nCheck success of upload on \nGrortir PyPI\n site and fix if needed.\n\n\nIf everything is ok, merge created branch to master.",
+            "title": "Contributing"
+        },
+        {
+            "location": "/about/contributing/#for-contributors",
+            "text": "",
+            "title": "For Contributors"
+        },
+        {
+            "location": "/about/contributing/#setup",
+            "text": "",
+            "title": "Setup"
+        },
+        {
+            "location": "/about/contributing/#requirements",
+            "text": "Make:  Windows: http://cygwin.com/install.html  Mac: https://developer.apple.com/xcode  Linux: http://www.gnu.org/software/make (likely already installed)    Pandoc: http://johnmacfarlane.net/pandoc/installing.html  Graphviz: http://www.graphviz.org/Download.php\nUp-to-date requirements are listed in file  required-system-packages.txt",
+            "title": "Requirements"
+        },
+        {
+            "location": "/about/contributing/#installation",
+            "text": "Create a virtual environment:  $ make env",
+            "title": "Installation"
+        },
+        {
+            "location": "/about/contributing/#setup-with-docker",
+            "text": "If you have any problems with creating your environment etc. You can use Docker.\nDocker will provide for you proper environment.  To create proper docker image type:  $ docker build --tag=grortir:completeEnvironment --no-cache $PATH_TO_SOURCE_DIR  In the end, at one of the latest lines you should see message:  touch env/.all  # flag to indicate all setup steps were successful  After that, you can run your docker image and start using already created environment.  docker run -i -t --name dockerGrortir -v $PATH_TO_SOURCE_DIR:/src/usr/currentGrortir  grortir:completeEnvironment /bin/bash  It's recommended to use absolute path in  $PATH_TO_SOURCE_DIR .\nIn result you will be moved to new bash which exist in your new created docker instance.\nNow you can go to your directory:  cd /src/usr/currentGrortir  and type 'make env' or 'make ci'. \nAs you can see your environment is properly configured.",
+            "title": "Setup with Docker"
+        },
+        {
+            "location": "/about/contributing/#development-tasks",
+            "text": "",
+            "title": "Development Tasks"
+        },
+        {
+            "location": "/about/contributing/#care-about-code-quality",
+            "text": "Follow Python, OOP and other good conventions.  Follow those conventions:   PEP0008  PEP0257  Google Python Style Guide",
+            "title": "Care about code quality"
+        },
+        {
+            "location": "/about/contributing/#docstrings",
+            "text": "Create meaningful dosctrings using  Google Docstring Format. \nAdd types in docstrings.",
+            "title": "Docstrings"
+        },
+        {
+            "location": "/about/contributing/#testing",
+            "text": "Manually run the tests:  $ make test\n$ make tests  # includes integration tests  or keep them running on change:  $ make watch   In order to have OS X notifications,  brew install terminal-notifier .",
+            "title": "Testing"
+        },
+        {
+            "location": "/about/contributing/#documentation",
+            "text": "Build the documentation:  $ make doc",
+            "title": "Documentation"
+        },
+        {
+            "location": "/about/contributing/#static-analysis",
+            "text": "Run linters and static analyzers:  $ make pep8\n$ make pep257\n$ make pylint\n$ make check  # includes all checks",
+            "title": "Static Analysis"
+        },
+        {
+            "location": "/about/contributing/#commiting-to-master",
+            "text": "Check that code pass all CI tests on your machine   Create Pull request and recheck that all CI tests are green.  If owner of repo approve your changes then merge to master.",
+            "title": "Commiting to master"
+        },
+        {
+            "location": "/about/contributing/#pull-requests",
+            "text": "Each commit in PR should represent one independent working functionality.  After merging your PR to master remove your branch.",
+            "title": "Pull Requests"
+        },
+        {
+            "location": "/about/contributing/#continuous-integration",
+            "text": "The CI server will report overall build status:  $ make ci",
+            "title": "Continuous Integration"
+        },
+        {
+            "location": "/about/contributing/#release-tasks",
+            "text": "Release to PyPI:   Update version in file  grortir/__init__.py  to  your.version  Check and update  CHANGES.md  file.  Commit changes in branch  release/your.version  Upload package:   $ make upload-test  # dry run upload to a test server, if success upload to real pypi\n$ make upload   Check success of upload on  Grortir PyPI  site and fix if needed.  If everything is ok, merge created branch to master.",
+            "title": "Release Tasks"
+        },
+        {
+            "location": "/about/license/",
+            "text": "License\n\n\nThe MIT License (MIT)\n\n\nCopyright \u00a9 2016, Wojtek Pietrucha\n\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.",
+            "title": "License"
+        },
+        {
+            "location": "/about/license/#license",
+            "text": "The MIT License (MIT)  Copyright \u00a9 2016, Wojtek Pietrucha  Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:  The above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.  THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.",
+            "title": "License"
+        }
+    ]
+}

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Wojtek Pietrucha">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Contributing - grortir</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Contributing";
+    var mkdocs_page_input_path = "about/contributing.md";
+    var mkdocs_page_url = "/about/contributing/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> grortir</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../gettingStarted/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Code</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../code/classes/">Classes</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../code/packages/">Packages</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../code/apidocs/">ApiDocs</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>About</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CHANGES/">Release Notes</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Contributing</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#for-contributors">For Contributors</a></li>
+                
+                    <li><a class="toctree-l4" href="#setup">Setup</a></li>
+                
+                    <li><a class="toctree-l4" href="#development-tasks">Development Tasks</a></li>
+                
+                    <li><a class="toctree-l4" href="#continuous-integration">Continuous Integration</a></li>
+                
+                    <li><a class="toctree-l4" href="#release-tasks">Release Tasks</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../license/">License</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">grortir</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>About &raquo;</li>
+        
+      
+    
+    <li>Contributing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/qbahn/grortir/edit/master/docs/about/contributing.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="for-contributors">For Contributors</h1>
+<h2 id="setup">Setup</h2>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>Make:<ul>
+<li>Windows: http://cygwin.com/install.html</li>
+<li>Mac: https://developer.apple.com/xcode</li>
+<li>Linux: http://www.gnu.org/software/make (likely already installed)</li>
+</ul>
+</li>
+<li>Pandoc: http://johnmacfarlane.net/pandoc/installing.html</li>
+<li>Graphviz: http://www.graphviz.org/Download.php
+Up-to-date requirements are listed in file 
+<code>required-system-packages.txt</code></li>
+</ul>
+<h3 id="installation">Installation</h3>
+<p>Create a virtual environment:</p>
+<pre><code>$ make env
+</code></pre>
+
+<h3 id="setup-with-docker">Setup with Docker</h3>
+<p>If you have any problems with creating your environment etc. You can use Docker.
+Docker will provide for you proper environment.</p>
+<p>To create proper docker image type:</p>
+<pre><code>$ docker build --tag=grortir:completeEnvironment --no-cache $PATH_TO_SOURCE_DIR
+</code></pre>
+
+<p>In the end, at one of the latest lines you should see message:</p>
+<pre><code>touch env/.all  # flag to indicate all setup steps were successful
+</code></pre>
+
+<p>After that, you can run your docker image and start using already created environment.</p>
+<pre><code>docker run -i -t --name dockerGrortir -v $PATH_TO_SOURCE_DIR:/src/usr/currentGrortir  grortir:completeEnvironment /bin/bash
+</code></pre>
+
+<p>It's recommended to use absolute path in <code>$PATH_TO_SOURCE_DIR</code>.
+In result you will be moved to new bash which exist in your new created docker instance.
+Now you can go to your directory:</p>
+<pre><code>cd /src/usr/currentGrortir
+</code></pre>
+
+<p>and type 'make env' or 'make ci'. 
+As you can see your environment is properly configured.</p>
+<h2 id="development-tasks">Development Tasks</h2>
+<h3 id="care-about-code-quality">Care about code quality</h3>
+<p>Follow Python, OOP and other good conventions.</p>
+<p>Follow those conventions:</p>
+<ul>
+<li><a href="https://www.python.org/dev/peps/pep-0008/">PEP0008</a></li>
+<li><a href="https://www.python.org/dev/peps/pep-0257/">PEP0257</a></li>
+<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
+</ul>
+<h4 id="docstrings">Docstrings</h4>
+<p>Create meaningful dosctrings using <a href="http://sphinxcontrib-napoleon.readthedocs.org/en/latest/example_google.html">Google Docstring Format.</a>
+Add types in docstrings.</p>
+<h3 id="testing">Testing</h3>
+<p>Manually run the tests:</p>
+<pre><code>$ make test
+$ make tests  # includes integration tests
+</code></pre>
+
+<p>or keep them running on change:</p>
+<pre><code>$ make watch
+</code></pre>
+
+<blockquote>
+<p>In order to have OS X notifications, <code>brew install terminal-notifier</code>.</p>
+</blockquote>
+<h3 id="documentation">Documentation</h3>
+<p>Build the documentation:</p>
+<pre><code>$ make doc
+</code></pre>
+
+<h3 id="static-analysis">Static Analysis</h3>
+<p>Run linters and static analyzers:</p>
+<pre><code>$ make pep8
+$ make pep257
+$ make pylint
+$ make check  # includes all checks
+</code></pre>
+
+<h3 id="commiting-to-master">Commiting to master</h3>
+<ol>
+<li>Check that code pass all CI tests on your machine </li>
+<li>Create Pull request and recheck that all CI tests are green.</li>
+<li>If owner of repo approve your changes then merge to master.</li>
+</ol>
+<h4 id="pull-requests">Pull Requests</h4>
+<ol>
+<li>Each commit in PR should represent one independent working functionality.</li>
+<li>After merging your PR to master remove your branch.</li>
+</ol>
+<h2 id="continuous-integration">Continuous Integration</h2>
+<p>The CI server will report overall build status:</p>
+<pre><code>$ make ci
+</code></pre>
+
+<h2 id="release-tasks">Release Tasks</h2>
+<p>Release to PyPI:</p>
+<ol>
+<li>Update version in file <code>grortir/__init__.py</code> to <code>your.version</code></li>
+<li>Check and update <code>CHANGES.md</code> file.</li>
+<li>Commit changes in branch <code>release/your.version</code></li>
+<li>Upload package:</li>
+</ol>
+<pre><code>$ make upload-test  # dry run upload to a test server, if success upload to real pypi
+$ make upload
+</code></pre>
+
+<ol>
+<li>Check success of upload on <a href="https://pypi.python.org/pypi?%3Aaction=pkg_edit&amp;name=Grortir">Grortir PyPI</a> site and fix if needed.</li>
+<li>If everything is ok, merge created branch to master.</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../CHANGES/" class="btn btn-neutral" title="Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/qbahn/grortir" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../CHANGES/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../license/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
