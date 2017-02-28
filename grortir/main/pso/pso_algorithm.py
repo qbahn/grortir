@@ -40,8 +40,15 @@ class PsoAlgorithm:
 
     def _post_processing(self):
         final_status = OptimizationStatus.success
+        statuses = ""
+        costs = ""
         for stage in self.grouping_strategy.ordered_stages:
+            statuses += str(stage.optimization_status) + ", "
+            costs += str(stage.get_cost()) + ", "
             if stage.optimization_status != OptimizationStatus.success:
+                LOG.debug("Failed stage: " + str(stage))
                 final_status = OptimizationStatus.failed
         self.process.optimization_status = final_status
         LOG.info('Final status of process optimization: ' + str(final_status))
+        LOG.info('Statuses of stages: ' + statuses[:-3])
+        LOG.info('Costs of stages: ' + costs[:-3])
